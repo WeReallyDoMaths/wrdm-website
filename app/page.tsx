@@ -366,13 +366,13 @@ export default function Home() {
           </p>
 
           <div className="mt-12">
-            <a
-              href="https://forms.gle/fWmZt22ekpWzBmrn7"
-              target="_blank"
-              className="rounded-full bg-yellow-400 px-10 py-5 text-lg font-semibold text-black transition hover:bg-yellow-300"
-            >
-              Complete Enrollment Interest Form
-            </a>
+           <a
+  href="https://forms.gle/fWmZt22ekpWzBmrn7"
+  target="_blank"
+  className="inline-flex max-w-full items-center justify-center rounded-full bg-yellow-400 px-8 py-5 text-center text-base font-semibold leading-tight text-black transition hover:bg-yellow-300 sm:text-lg"
+>
+  Complete Enrollment Interest Form
+</a>
           </div>
         </div>
       </section>
