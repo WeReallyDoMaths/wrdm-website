@@ -1,3 +1,4 @@
+"use client";
 import { InlineMath } from "react-katex";
 
 const mathItems = [
