@@ -78,7 +78,13 @@ export default function Home() {
             <a href="#how" className="text-sm text-slate-300 hover:text-yellow-400">
               How It Works
                         </a>
+              <a href="#about" className="text-sm text-slate-300 hover:text-yellow-400">
+    About
+  </a>
 
+  <a href="#faq" className="text-sm text-slate-300 hover:text-yellow-400">
+    FAQ
+  </a>
             <a href="#programmes" className="text-sm text-slate-300 hover:text-yellow-400">
               Programmes
             </a>
@@ -86,8 +92,8 @@ export default function Home() {
             <a href={FORM_LINK} target="_blank" rel="noopener noreferrer" className="text-sm text-slate-300 hover:text-yellow-400">
               Enrolment
             </a>
-
-            <a href="mailto:admin@wereallydomaths.info" className="text-sm text-slate-300 hover:text-yellow-400">
+            
+              <a href="mailto:admin@wereallydomaths.info" className="text-sm text-slate-300 hover:text-yellow-400">
               Contact
             </a>
           </nav>
@@ -282,7 +288,91 @@ export default function Home() {
       practice, and sustained effort over time.
     </p>
   </div>
-</section>    
+</section>   
+<section id="faq" className="relative z-10 mx-auto max-w-7xl px-6 pb-32">
+  <div className="mx-auto max-w-4xl text-center">
+    <p className="text-sm font-semibold uppercase tracking-[0.25em] text-yellow-400">
+      FREQUENTLY ASKED QUESTIONS
+    </p>
+
+    <h2 className="mt-4 text-4xl font-bold md:text-6xl">
+      Programme Information
+    </h2>
+
+    <p className="mt-8 text-lg leading-8 text-slate-300 md:text-xl">
+      Important information about programme structure, expectations,
+      preparation, independent practice, and student support.
+    </p>
+  </div>
+
+  <div className="mt-20 space-y-6">
+    {[
+      {
+        question: "Who is the programme designed for?",
+        answer:
+          "The programme is designed for students in Years 8 to 11 studying or preparing to study Higher Tier Edexcel IGCSE Mathematics. The programmes support students currently preparing for IGCSE examinations, students seeking stronger mathematical foundations before entering examination years, and students pursuing accelerated pathways or early entry examination routes offered by some schools. #WeReallyDoMaths is designed to support long-term mathematical development through structured routines, deliberate practice, guided feedback, and consistent preparation over time.",
+      },
+      {
+        question: "Which examination board is covered?",
+        answer:
+          "#WeReallyDoMaths currently focuses on students preparing for Pearson Edexcel International GCSE Mathematics A (4MA1) Higher Tier on the linear pathway for grades 9–1. Teaching, practice materials, retrieval activities, and exam preparation are structured around the expectations, style, sequencing, and demands of the Edexcel 4MA1 specification and examination papers. The programmes are designed to support long-term preparation for final linear examinations through consistent deliberate practice, structured revision, and progressive mathematical development over time.",
+      },
+      {
+        question: "How are lessons delivered?",
+        answer:
+          "Lessons are delivered fully online through structured live teaching sessions combined with guided independent practice, Google Classroom resources, written mathematical working, and ongoing feedback cycles. Students participate in weekly live sessions designed around explanation, modelling, deliberate practice, exam technique, and mathematical reasoning.",
+      },
+      {
+        question: "Are lessons live or pre-recorded?",
+        answer:
+          "Students receive short pre-teaching videos before live lessons to introduce key concepts, methods, and vocabulary in advance. These structured preparation materials help students arrive better prepared for deeper mathematical discussion and problem-solving during live sessions. Live lessons themselves are delivered online by an experienced qualified Mathematics teacher and focus on guided instruction, exam technique, reasoning, deliberate practice, and interactive worked examples.",
+      },
+      {
+        question: "What happens if a student misses a lesson?",
+        answer:
+          "Students remain responsible for engaging with lesson materials, practice tasks, and preparation resources provided through Google Classroom. Where appropriate, students may review shared resources, complete independent practice, and use office hour support to address gaps in understanding and maintain progress within the programme sequence.",
+      },
+      {
+        question: "How much independent study is expected?",
+        answer:
+          "Consistent independent practice is an important part of long-term mathematical improvement. Students are expected to complete structured exam-style practice, revisit prior learning regularly, review feedback carefully, and engage with preparation materials between live sessions. Weekly routines and deliberate practice play a significant role in long-term progress and confidence development.",
+      },
+      {
+        question: "How does AI-assisted feedback work?",
+        answer:
+          "AI-assisted feedback systems are used to support analysis of mathematical working, identify misconceptions, highlight inefficient methods, and improve written mathematical communication. AI tools are used to support, not replace, teacher guidance and structured feedback processes.",
+      },
+      {
+        question: "Are students expected to submit written mathematical working?",
+        answer:
+          "Yes. Students are expected to upload written mathematical working regularly through Google Classroom. Reviewing written solutions allows deeper analysis of reasoning, working structure, notation, communication, and exam-method accuracy beyond final answers alone.",
+      },
+      {
+        question: "How are weaker topic areas identified?",
+        answer:
+          "Weaker areas are identified through structured exam practice, retrieval activities, lesson participation, written mathematical working, and ongoing feedback analysis. Weekly independent practice is completed through Dr Frost Maths, which provides students with immediate automated feedback while also generating Question Level Analysis (QLA) data to help #WeReallyDoMaths identify weaker topic areas, misconceptions, and patterns in student performance over time. Written mathematical working submitted through Google Classroom also helps identify more nuanced weaknesses beyond topic-specific performance alone, including gaps in reasoning, mathematical communication, working structure, notation accuracy, method selection, and exam technique. This allows students to focus deliberate practice more effectively and revisit topics requiring further reinforcement over time.",
+      },
+      {
+        question: "What technology is required?",
+        answer:
+          "Students require a stable internet connection, a device suitable for live online lessons, access to Google Classroom, a dedicated mathematics notebook or organised folder for storing lesson notes, worked examples, retrieval practice, feedback, and programme resources, writing materials for regular mathematical working, and the ability to upload scanned or photographed written mathematical working. A scientific calculator appropriate for Higher Tier Edexcel IGCSE Mathematics is also recommended.",
+      },
+    ].map((faq, index) => (
+      <div
+        key={index}
+        className="rounded-[2rem] border border-yellow-400/15 bg-black/70 p-8 backdrop-blur-md"
+      >
+        <h3 className="text-2xl font-bold text-white">
+          {faq.question}
+        </h3>
+
+        <p className="mt-5 leading-8 text-slate-300">
+          {faq.answer}
+        </p>
+      </div>
+    ))}
+  </div>
+</section> 
       <section id="programmes" className="relative z-10 mx-auto max-w-7xl px-6 pb-32">
         <div className="mb-14 text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.25em] text-yellow-400">
