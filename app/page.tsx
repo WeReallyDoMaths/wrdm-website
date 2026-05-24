@@ -77,81 +77,7 @@ export default function Home() {
           <nav className="hidden items-center gap-8 md:flex">
             <a href="#how" className="text-sm text-slate-300 hover:text-yellow-400">
               How It Works
-<section className="relative z-10 mx-auto max-w-7xl px-6 pb-32">
-  <div className="mx-auto max-w-4xl text-center">
-    <p className="text-sm font-semibold uppercase tracking-[0.25em] text-yellow-400">
-      ABOUT #WEREALLYDOMATHS
-    </p>
-
-    <h2 className="mt-4 text-4xl font-bold leading-tight md:text-6xl">
-      Mathematical Progress Is Built Through Consistent Deliberate Practice
-    </h2>
-
-    <p className="mt-8 text-lg leading-8 text-slate-300 md:text-xl">
-      At #WeReallyDoMaths, we believe mathematical ability is not fixed.
-      Strong outcomes are developed through structured routines, deliberate
-      practice, meaningful feedback, and consistent effort over time.
-    </p>
-
-    <p className="mt-6 text-lg leading-8 text-slate-400 md:text-xl">
-      Trajectory matters more than starting position. Students who engage in
-      regular mathematical practice, revisit concepts consistently, and learn
-      from feedback steadily improve confidence, fluency, reasoning, and exam
-      performance over time.
-    </p>
-  </div>
-
-  <div className="mt-20 grid gap-6 md:grid-cols-2">
-    {[
-      {
-        number: "01",
-        title: "Consistency Shapes Mathematical Progress",
-        text: "Long-term mathematical improvement is rarely the result of occasional bursts of revision. Consistent weekly routines, deliberate practice, and sustained engagement have a far greater impact on long-term progress and Higher Tier performance.",
-      },
-      {
-        number: "02",
-        title: "Students Forget What They Do Not Revisit",
-        text: "Mathematical knowledge strengthens when concepts are revisited regularly over time. Structured retrieval, repeated exposure, and carefully sequenced practice help move knowledge into long-term memory and improve recall under exam conditions.",
-      },
-      {
-        number: "03",
-        title: "Feedback Drives Improvement",
-        text: "Students improve more effectively when misconceptions are identified early and addressed consistently. Immediate practice feedback, written solution analysis, and targeted guidance help students refine methods, mathematical communication, and exam technique.",
-      },
-      {
-        number: "04",
-        title: "Confidence Comes Through Competence",
-        text: "Lasting mathematical confidence is built through preparation, practice, reflection, and repeated success over time. Students become more confident when they genuinely understand methods, communicate reasoning clearly, and experience measurable progress.",
-      },
-    ].map((card) => (
-      <div
-        key={card.number}
-        className="rounded-[2rem] border border-yellow-400/15 bg-black/70 p-8 backdrop-blur-md transition duration-300 hover:border-yellow-400/40 hover:bg-black/80"
-      >
-        <p className="text-5xl font-bold text-yellow-400/80">
-          {card.number}
-        </p>
-
-        <h3 className="mt-6 text-2xl font-bold">
-          {card.title}
-        </h3>
-
-        <p className="mt-5 leading-8 text-slate-300">
-          {card.text}
-        </p>
-      </div>
-    ))}
-  </div>
-
-  <div className="mt-14 rounded-[2rem] border border-yellow-400/20 bg-black/75 p-10 text-center backdrop-blur-md">
-    <p className="mx-auto max-w-5xl text-xl leading-9 text-slate-300 md:text-2xl">
-      Strong mathematical outcomes are rarely accidental. They are usually
-      the result of consistent routines, thoughtful teaching, deliberate
-      practice, and sustained effort over time.
-    </p>
-  </div>
-</section>
-            </a>
+                        </a>
 
             <a href="#programmes" className="text-sm text-slate-300 hover:text-yellow-400">
               Programmes
@@ -283,7 +209,80 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <section id="about" className="relative z-10 mx-auto max-w-7xl px-6 pb-32">
+  <div className="mx-auto max-w-4xl text-center">
+    <p className="text-sm font-semibold uppercase tracking-[0.25em] text-yellow-400">
+      ABOUT #WEREALLYDOMATHS
+    </p>
 
+    <h2 className="mt-4 text-4xl font-bold leading-tight md:text-6xl">
+      Mathematical Progress Is Built Through Consistent Deliberate Practice
+    </h2>
+
+    <p className="mt-8 text-lg leading-8 text-slate-300 md:text-xl">
+      At #WeReallyDoMaths, we believe mathematical ability is not fixed.
+      Strong outcomes are developed through structured routines, deliberate
+      practice, meaningful feedback, and consistent effort over time.
+    </p>
+
+    <p className="mt-6 text-lg leading-8 text-slate-400 md:text-xl">
+      Trajectory matters more than starting position. Students who engage in
+      regular mathematical practice, revisit concepts consistently, and learn
+      from feedback steadily improve confidence, fluency, reasoning, and exam
+      performance over time.
+    </p>
+  </div>
+
+  <div className="mt-20 grid gap-6 md:grid-cols-2">
+    {[
+      {
+        number: "01",
+        title: "Consistency Shapes Mathematical Progress",
+        text: "Long-term mathematical improvement is rarely the result of occasional bursts of revision. Consistent weekly routines, deliberate practice, and sustained engagement have a far greater impact on long-term progress and Higher Tier performance.",
+      },
+      {
+        number: "02",
+        title: "Students Forget What They Do Not Revisit",
+        text: "Mathematical knowledge strengthens when concepts are revisited regularly over time. Structured retrieval, repeated exposure, and carefully sequenced practice help move knowledge into long-term memory and improve recall under exam conditions.",
+      },
+      {
+        number: "03",
+        title: "Feedback Drives Improvement",
+        text: "Students improve more effectively when misconceptions are identified early and addressed consistently. Immediate practice feedback, written solution analysis, and targeted guidance help students refine methods, mathematical communication, and exam technique.",
+      },
+      {
+        number: "04",
+        title: "Confidence Comes Through Competence",
+        text: "Lasting mathematical confidence is built through preparation, practice, reflection, and repeated success over time. Students become more confident when they genuinely understand methods, communicate reasoning clearly, and experience measurable progress.",
+      },
+    ].map((card) => (
+      <div
+        key={card.number}
+        className="rounded-[2rem] border border-yellow-400/15 bg-black/70 p-8 backdrop-blur-md transition duration-300 hover:border-yellow-400/40 hover:bg-black/80"
+      >
+        <p className="text-5xl font-bold text-yellow-400/80">
+          {card.number}
+        </p>
+
+        <h3 className="mt-6 text-2xl font-bold">
+          {card.title}
+        </h3>
+
+        <p className="mt-5 leading-8 text-slate-300">
+          {card.text}
+        </p>
+      </div>
+    ))}
+  </div>
+
+  <div className="mt-14 rounded-[2rem] border border-yellow-400/20 bg-black/75 p-10 text-center backdrop-blur-md">
+    <p className="mx-auto max-w-5xl text-xl leading-9 text-slate-300 md:text-2xl">
+      Strong mathematical outcomes are rarely accidental. They are usually
+      the result of consistent routines, thoughtful teaching, deliberate
+      practice, and sustained effort over time.
+    </p>
+  </div>
+</section>    
       <section id="programmes" className="relative z-10 mx-auto max-w-7xl px-6 pb-32">
         <div className="mb-14 text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.25em] text-yellow-400">
