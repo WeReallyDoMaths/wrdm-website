@@ -75,28 +75,42 @@ export default function Home() {
           </p>
 
           <nav className="hidden items-center gap-8 md:flex">
-            <a href="#how" className="text-sm text-slate-300 hover:text-yellow-400">
-              How It Works
-                        </a>
-              <a href="#about" className="text-sm text-slate-300 hover:text-yellow-400">
+  <a href="#how" className="text-sm text-slate-300 hover:text-yellow-400">
+    How It Works
+  </a>
+
+  <a href="#about" className="text-sm text-slate-300 hover:text-yellow-400">
     About
   </a>
 
   <a href="#faq" className="text-sm text-slate-300 hover:text-yellow-400">
     FAQ
   </a>
-            <a href="#programmes" className="text-sm text-slate-300 hover:text-yellow-400">
-              Programmes
-            </a>
 
-            <a href={FORM_LINK} target="_blank" rel="noopener noreferrer" className="text-sm text-slate-300 hover:text-yellow-400">
-              Enrolment
-            </a>
-            
-              <a href="mailto:admin@wereallydomaths.info" className="text-sm text-slate-300 hover:text-yellow-400">
-              Contact
-            </a>
-          </nav>
+  <a href="#parents" className="text-sm text-slate-300 hover:text-yellow-400">
+    Parents
+  </a>
+
+  <a href="#programmes" className="text-sm text-slate-300 hover:text-yellow-400">
+    Programmes
+  </a>
+
+  <a
+    href={FORM_LINK}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-sm text-slate-300 hover:text-yellow-400"
+  >
+    Enrolment
+  </a>
+
+  <a
+    href="mailto:admin@wereallydomaths.info"
+    className="text-sm text-slate-300 hover:text-yellow-400"
+  >
+    Contact
+  </a>
+</nav>
 
           <a href={FORM_LINK} target="_blank" rel="noopener noreferrer" className="hidden rounded-full bg-yellow-400 px-5 py-2 text-sm font-semibold text-black hover:bg-yellow-300 md:block">
             Apply Now
@@ -373,6 +387,73 @@ export default function Home() {
     ))}
   </div>
 </section> 
+<section id="parents" className="relative z-10 mx-auto max-w-7xl px-6 pb-32">
+  <div className="mx-auto max-w-4xl text-center">
+    <p className="text-sm font-semibold uppercase tracking-[0.25em] text-yellow-400">
+      FOR PARENTS
+    </p>
+
+    <h2 className="mt-4 text-4xl font-bold md:text-6xl">
+      Structured Support For Long-Term Mathematical Development
+    </h2>
+
+    <p className="mt-8 text-lg leading-8 text-slate-300 md:text-xl">
+      #WeReallyDoMaths is designed around the belief that long-term
+      mathematical progress is built through consistency, deliberate
+      practice, structured feedback, and sustained routines over time.
+    </p>
+  </div>
+
+  <div className="mt-20 grid gap-6 md:grid-cols-2">
+    {[
+      {
+        title: "Consistent Weekly Structure",
+        text: "Students engage with a structured weekly cycle of preparation, live instruction, independent practice, feedback, and reflection designed to support long-term mathematical progress and stronger examination performance over time.",
+      },
+      {
+        title: "Deliberate Practice And Accountability",
+        text: "Students are expected to complete regular independent mathematical practice between sessions. Weekly routines and consistent engagement play an important role in developing fluency, confidence, reasoning, and long-term retention.",
+      },
+      {
+        title: "Progress Monitoring",
+        text: "Student performance is monitored through structured exam practice, retrieval activities, Question Level Analysis (QLA), written mathematical working, and ongoing feedback processes to help identify strengths, misconceptions, and areas requiring further reinforcement.",
+      },
+      {
+        title: "Mathematical Communication And Reasoning",
+        text: "The programme focuses not only on final answers, but also on mathematical reasoning, written communication, method selection, notation accuracy, and the ability to explain mathematical thinking clearly under exam conditions.",
+      },
+      {
+        title: "Preparation Before Live Lessons",
+        text: "Students receive short pre-teaching videos before live sessions to introduce key concepts and methods in advance. This allows live lesson time to focus more deeply on reasoning, guided practice, discussion, and exam-style application.",
+      },
+      {
+        title: "A Calm And Academically Serious Environment",
+        text: "The programmes are designed to create a focused, structured, and academically serious learning environment where students are encouraged to develop independence, resilience, consistency, and confidence through sustained mathematical effort over time.",
+      },
+    ].map((item, index) => (
+      <div
+        key={index}
+        className="rounded-[2rem] border border-yellow-400/15 bg-black/70 p-8 backdrop-blur-md"
+      >
+        <h3 className="text-2xl font-bold text-white">
+          {item.title}
+        </h3>
+
+        <p className="mt-5 leading-8 text-slate-300">
+          {item.text}
+        </p>
+      </div>
+    ))}
+  </div>
+
+  <div className="mt-14 rounded-[2rem] border border-yellow-400/20 bg-black/75 p-10 text-center backdrop-blur-md">
+    <p className="mx-auto max-w-5xl text-xl leading-9 text-slate-300 md:text-2xl">
+      Strong mathematical confidence is usually developed through preparation,
+      deliberate practice, meaningful feedback, and consistent routines over
+      time.
+    </p>
+  </div>
+</section>
       <section id="programmes" className="relative z-10 mx-auto max-w-7xl px-6 pb-32">
         <div className="mb-14 text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.25em] text-yellow-400">
