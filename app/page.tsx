@@ -600,6 +600,9 @@ export default function Home() {
               <a href="/terms-and-conditions" className="transition hover:text-yellow-400">
   Terms & Conditions
 </a>
+              <a href="/refund-policy" className="transition hover:text-yellow-400">
+  Refund Policy
+</a>
               <a href={FORM_LINK} target="_blank" rel="noopener noreferrer" className="transition hover:text-yellow-400">
                 Enrolment
               </a>
