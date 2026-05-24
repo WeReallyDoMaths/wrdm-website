@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import { InlineMath } from "react-katex";
 
 const FORM_LINK = "https://forms.gle/fWmZt22ekpWzBmrn7";
@@ -82,6 +84,10 @@ export default function Home() {
   <a href="#about" className="text-sm text-slate-300 hover:text-yellow-400">
     About
   </a>
+
+    <a href="#founder" className="text-sm text-slate-300 hover:text-yellow-400">
+  Founder
+</a>
 
   <a href="#faq" className="text-sm text-slate-300 hover:text-yellow-400">
     FAQ
@@ -302,7 +308,69 @@ export default function Home() {
       practice, and sustained effort over time.
     </p>
   </div>
-</section>   
+</section> 
+<section id="founder" className="relative z-10 mx-auto max-w-7xl px-6 pb-32">
+  <div className="grid items-center gap-14 lg:grid-cols-2">
+    <div className="relative">
+      <div className="absolute inset-0 rounded-[2rem] bg-yellow-400/10 blur-3xl" />
+
+      <div className="relative overflow-hidden rounded-[2rem] border border-yellow-400/20 bg-black/70">
+        <Image
+          src="/founder.png"
+          alt="Founder of #WeReallyDoMaths"
+          width={1200}
+          height={1400}
+          className="h-full w-full object-cover"
+        />
+      </div>
+    </div>
+
+    <div>
+      <p className="text-sm font-semibold uppercase tracking-[0.25em] text-yellow-400">
+        FOUNDER
+      </p>
+
+      <h2 className="mt-4 text-4xl font-bold md:text-6xl">
+        Mathematics Teaching Built Around Long-Term Mastery
+      </h2>
+
+      <div className="mt-10 space-y-6 text-lg leading-8 text-slate-300">
+        <p>
+          #WeReallyDoMaths was founded by an experienced mathematics teacher
+          with over 10 years of teaching experience across the United Kingdom
+          and Dubai, including GCSE, IGCSE, A Level, and International A Level
+          Mathematics.
+        </p>
+
+        <p>
+          The founder holds two MSc degrees in Mathematics and remains actively
+          engaged in graduate-level mathematical research alongside ongoing
+          teacher development and instructional refinement.
+        </p>
+
+        <p>
+          Recent examination cohorts taught by the founder within full-time
+          classroom teaching practice have included 97% of students attaining
+          Grade 9 outcomes in Edexcel IGCSE Mathematics.
+        </p>
+
+        <p>
+          The educational philosophy behind #WeReallyDoMaths is strongly rooted
+          in deliberate practice, retrieval, structured routines, meaningful
+          feedback, and the belief that long-term mathematical growth is built
+          through sustained effort and consistency over time.
+        </p>
+
+        <p>
+          Alongside direct classroom teaching, continued engagement with
+          educational systems, curriculum design, assessment strategy, and
+          teacher development supports ongoing refinement of instructional
+          practice and long-term student outcomes.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>  
 <section id="faq" className="relative z-10 mx-auto max-w-7xl px-6 pb-32">
   <div className="mx-auto max-w-4xl text-center">
     <p className="text-sm font-semibold uppercase tracking-[0.25em] text-yellow-400">
