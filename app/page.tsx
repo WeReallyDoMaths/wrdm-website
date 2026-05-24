@@ -594,7 +594,12 @@ export default function Home() {
               <a href="#programmes" className="transition hover:text-yellow-400">
                 Programmes
               </a>
-
+              <a href="/privacy-policy" className="transition hover:text-yellow-400">
+  Privacy Policy
+</a>
+              <a href="/terms-and-conditions" className="transition hover:text-yellow-400">
+  Terms & Conditions
+</a>
               <a href={FORM_LINK} target="_blank" rel="noopener noreferrer" className="transition hover:text-yellow-400">
                 Enrolment
               </a>
