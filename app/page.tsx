@@ -183,9 +183,14 @@ export default function Home() {
           IGCSE Mathematics
         </h1>
 
-        <div className="mt-8 inline-flex w-fit rounded-full border border-yellow-400/30 bg-black/60 px-5 py-3 text-sm font-semibold text-yellow-300 backdrop-blur-sm">
-          2026–2027 Cohort Begins Monday, 3 August 2026
-        </div>
+        <a
+  href={FORM_LINK}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="mt-8 inline-flex w-fit rounded-full border border-yellow-400/30 bg-black/60 px-5 py-3 text-sm font-semibold text-yellow-300 backdrop-blur-sm transition hover:border-yellow-400/60 hover:bg-yellow-400/10 hover:text-yellow-200"
+>
+  2026–2027 Cohort Begins Monday, 3 August 2026
+</a>
 
         <div className="mt-10 flex max-w-6xl flex-wrap gap-4 text-lg text-slate-300 md:text-xl">
           <span>Structured Weekly Live Lessons</span>
@@ -617,6 +622,14 @@ export default function Home() {
                   Wednesday — 6:00 PM to 7:30 PM
                 </p>
               </div>
+              <a
+  href={FORM_LINK}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-yellow-400 px-6 py-4 text-center font-semibold text-black transition hover:bg-yellow-300"
+>
+  Apply For The 1-Year Pathway
+</a>
             </div>
           </div>
 
@@ -655,6 +668,14 @@ export default function Home() {
                 </p>
               </div>
             </div>
+            <a
+  href={FORM_LINK}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-yellow-400 px-6 py-4 text-center font-semibold text-black transition hover:bg-yellow-300"
+>
+  Apply For The 2-Year Pathway
+</a>
           </div>
         </div>
       </section>
