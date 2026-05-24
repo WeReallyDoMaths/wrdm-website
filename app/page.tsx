@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 
+import { useState } from "react";
 import { InlineMath } from "react-katex";
 
 const FORM_LINK = "https://forms.gle/fWmZt22ekpWzBmrn7";
@@ -66,63 +67,110 @@ function MathWatermark() {
 }
 
 export default function Home() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <main className="relative min-h-screen bg-black text-white">
       <MathWatermark />
 
-      <header className="fixed top-0 z-50 w-full border-b border-yellow-400/20 bg-black/70 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <p className="text-lg font-bold tracking-wide text-yellow-400">
-            #WRDM
-          </p>
+<header className="fixed top-0 z-50 w-full border-b border-yellow-400/20 bg-black/70 backdrop-blur-xl">
+  <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+    <p className="text-lg font-bold tracking-wide text-yellow-400">
+      #WRDM
+    </p>
 
-          <nav className="hidden items-center gap-8 md:flex">
-  <a href="#how" className="text-sm text-slate-300 hover:text-yellow-400">
-    How It Works
-  </a>
+    <nav className="hidden items-center gap-8 md:flex">
+      <a href="#how" className="text-sm text-slate-300 hover:text-yellow-400">
+        How It Works
+      </a>
 
-  <a href="#about" className="text-sm text-slate-300 hover:text-yellow-400">
-    About
-  </a>
+      <a href="#about" className="text-sm text-slate-300 hover:text-yellow-400">
+        About
+      </a>
 
-    <a href="#founder" className="text-sm text-slate-300 hover:text-yellow-400">
-  Founder
-</a>
+      <a href="#founder" className="text-sm text-slate-300 hover:text-yellow-400">
+        Founder
+      </a>
 
-  <a href="#faq" className="text-sm text-slate-300 hover:text-yellow-400">
-    FAQ
-  </a>
+      <a href="#faq" className="text-sm text-slate-300 hover:text-yellow-400">
+        FAQ
+      </a>
 
-  <a href="#parents" className="text-sm text-slate-300 hover:text-yellow-400">
-    Parents
-  </a>
+      <a href="#parents" className="text-sm text-slate-300 hover:text-yellow-400">
+        Parents
+      </a>
 
-  <a href="#programmes" className="text-sm text-slate-300 hover:text-yellow-400">
-    Programmes
-  </a>
+      <a href="#programmes" className="text-sm text-slate-300 hover:text-yellow-400">
+        Programmes
+      </a>
 
-  <a
-    href={FORM_LINK}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="text-sm text-slate-300 hover:text-yellow-400"
-  >
-    Enrolment
-  </a>
+      <a
+        href={FORM_LINK}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-sm text-slate-300 hover:text-yellow-400"
+      >
+        Enrolment
+      </a>
+    </nav>
 
-  <a
-    href="mailto:admin@wereallydomaths.info"
-    className="text-sm text-slate-300 hover:text-yellow-400"
-  >
-    Contact
-  </a>
-</nav>
+    <a
+      href={FORM_LINK}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="hidden rounded-full bg-yellow-400 px-5 py-2 text-sm font-semibold text-black hover:bg-yellow-300 md:block"
+    >
+      Apply Now
+    </a>
 
-          <a href={FORM_LINK} target="_blank" rel="noopener noreferrer" className="hidden rounded-full bg-yellow-400 px-5 py-2 text-sm font-semibold text-black hover:bg-yellow-300 md:block">
-            Apply Now
+    <button
+      onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+      className="rounded-full border border-yellow-400/30 px-4 py-2 text-sm font-semibold text-yellow-400 md:hidden"
+    >
+      Menu
+    </button>
+  </div>
+
+  {mobileMenuOpen && (
+    <div className="border-t border-yellow-400/10 bg-black/95 px-6 py-6 md:hidden">
+      <div className="flex flex-col gap-5 text-sm text-slate-300">
+        {[
+          ["How It Works", "#how"],
+          ["About", "#about"],
+          ["Founder", "#founder"],
+          ["FAQ", "#faq"],
+          ["Parents", "#parents"],
+          ["Programmes", "#programmes"],
+        ].map(([label, href]) => (
+          <a
+            key={label}
+            href={href}
+            onClick={() => setMobileMenuOpen(false)}
+            className="hover:text-yellow-400"
+          >
+            {label}
           </a>
-        </div>
-      </header>
+        ))}
+
+        <a
+          href={FORM_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="rounded-full bg-yellow-400 px-5 py-3 text-center font-semibold text-black hover:bg-yellow-300"
+        >
+          Apply Now
+        </a>
+
+        <a
+          href="mailto:admin@wereallydomaths.info"
+          className="text-slate-300 hover:text-yellow-400"
+        >
+          Contact
+        </a>
+      </div>
+    </div>
+  )}
+</header>
 
       <section className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-6 pb-24 pt-40">
         <p className="mb-6 text-sm font-semibold uppercase tracking-[0.25em] text-yellow-400">
