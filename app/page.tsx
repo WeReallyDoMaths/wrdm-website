@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { InlineMath } from "react-katex";
 
 const FORM_LINK = "https://forms.gle/fWmZt22ekpWzBmrn7";
@@ -36,20 +36,21 @@ const mathItems = [
 
 function MathWatermark() {
   return (
-    <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-black">
-      <div className="absolute inset-0 bg-black" />
-      <div className="absolute left-1/2 top-1/2 h-[850px] w-[850px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-yellow-400/20" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,black_84%)]" />
+    <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#FDFCF9]">
+      <div className="absolute inset-0 bg-[#FDFCF9]" />
+      <div className="absolute left-1/2 top-1/2 h-[850px] w-[850px] -translate-x-1/2 -translate-y-1/2 rounded-full border" style={{ borderColor: "rgba(222, 214, 194, 0.12)" }} />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#FDFCF9_84%)]" />
 
-      <div className="absolute inset-0 z-10 opacity-[0.32]">
+      <div className="absolute inset-0 z-10" style={{ opacity: 0.22 }}>
         {Array.from({ length: 24 }).map((_, col) => (
           <div
             key={col}
-            className="absolute top-[-10%] flex flex-col gap-12 text-yellow-400/55"
+            className="absolute top-[-10%] flex flex-col gap-12"
             style={{
               left: `${col * 4.5}%`,
               transform: `translateY(${col % 2 === 0 ? "0px" : "50px"})`,
               fontSize: "0.78rem",
+              color: "#DED6C2",
             }}
           >
             {Array.from({ length: 28 }).map((_, i) => (
@@ -61,8 +62,319 @@ function MathWatermark() {
         ))}
       </div>
 
-      <div className="absolute inset-0 z-20 bg-black/35" />
+      <div className="absolute inset-0 z-20 bg-[#FDFCF9]/20" />
     </div>
+  );
+}
+
+const navigation = [
+  ["Courses", "#courses"],
+  ["Free Introduction", "#free-week"],
+  ["How It Works", "#how"],
+  ["Meet Your Teacher", "#teacher"],
+  ["Frequently Asked Questions", "#faq"],
+];
+
+const courses = [
+  {
+    "id": "grade-8",
+    "label": "IGCSE · GRADE 8",
+    "title": "Grade 8 Accelerated",
+    "subtitle": "Algebra and Problem Solving",
+    "board": "Pearson Edexcel IGCSE · 4MA1 Higher",
+    "audience": "For students aiming for Grade 8 who are confident with basic algebra and ready for a faster pace.",
+    "description": "Strengthen demanding algebraic methods and learn to connect them in unfamiliar exam problems.",
+    "focus": [
+      "Algebraic fractions and rearranging formulae.",
+      "Quadratics, simultaneous equations and inequalities.",
+      "Clear reasoning and connected exam problems."
+    ],
+    "saturday": "11:30 am–12:45 pm",
+    "office": "Wednesday, 5:30–6:30 pm",
+    "outline": [
+      [
+        "Expanding and factorising quadratics",
+        "Take out the highest common factor, then expand and factorise quadratic expressions."
+      ],
+      [
+        "Algebraic fractions",
+        "Simplify and calculate with algebraic fractions, using factorisation and common denominators."
+      ],
+      [
+        "Rearranging formulae",
+        "Change the subject, including cases where it appears twice."
+      ],
+      [
+        "Quadratic equations",
+        "Form equations from contexts and choose suitable methods to solve them."
+      ],
+      [
+        "Completing the square",
+        "Complete the square and interpret quadratic graphs."
+      ],
+      [
+        "Simultaneous equations",
+        "Solve problems involving one linear and one quadratic equation."
+      ],
+      [
+        "Inequalities",
+        "Solve linear and quadratic inequalities and interpret solution sets."
+      ],
+      [
+        "Connected algebra problems",
+        "Choose and justify methods, revisit misconceptions and complete mixed exam-style practice."
+      ]
+    ]
+  },
+  {
+    "id": "grade-9",
+    "label": "IGCSE · GRADE 9",
+    "title": "Grade 9 Targeted Support",
+    "subtitle": "Indices, Sequences, Functions & Probability",
+    "board": "Pearson Edexcel IGCSE · 4MA1 Higher",
+    "audience": "For students aiming for Grade 9 who want guided support with demanding Higher Tier questions.",
+    "description": "Develop precise solutions through challenging practice, connected problems and feedback on your reasoning.",
+    "focus": [
+      "Index equations and arithmetic sequences and series.",
+      "Composite and inverse functions.",
+      "Conditional probability and sampling without replacement."
+    ],
+    "saturday": "1:00–2:15 pm",
+    "office": "Wednesday, 5:30–6:30 pm",
+    "outline": [
+      [
+        "Negative and fractional indices",
+        "Interpret powers and simplify expressions accurately using index laws."
+      ],
+      [
+        "Index equations",
+        "Rewrite expressions using common bases and solve equations involving powers."
+      ],
+      [
+        "Arithmetic sequences",
+        "Find unknown terms, first terms and common differences from given conditions."
+      ],
+      [
+        "Arithmetic series",
+        "Use sum formulae and combine information to solve connected problems."
+      ],
+      [
+        "Composite functions",
+        "Form composite functions and solve equations involving them."
+      ],
+      [
+        "Inverse functions",
+        "Find inverse functions and tackle connected function problems."
+      ],
+      [
+        "Dependent events",
+        "Model sampling without replacement using suitable representations."
+      ],
+      [
+        "Conditional probability",
+        "Find conditional and unknown probabilities, with mixed review in the final Sunday lesson."
+      ]
+    ]
+  },
+  {
+    "id": "year-10",
+    "label": "IGCSE · YEAR 10",
+    "title": "Year 10 IGCSE Head Start",
+    "subtitle": "Algebra Essentials",
+    "board": "Pearson Edexcel IGCSE · 4MA1 Higher",
+    "audience": "For Year 10 students who want a stronger foundation in algebra.",
+    "description": "Build secure methods and learn to apply them confidently to IGCSE questions.",
+    "focus": [
+      "Expressions, substitution and expanding brackets.",
+      "Factorising using the highest common factor.",
+      "Forming equations and rearranging formulae."
+    ],
+    "saturday": "10:00–11:15 am",
+    "office": "Wednesday, 5:30–6:30 pm",
+    "outline": [
+      [
+        "Expressions and notation",
+        "Collect like terms and write algebraic expressions accurately."
+      ],
+      [
+        "Substitution",
+        "Evaluate expressions involving negative numbers, fractions and powers."
+      ],
+      [
+        "Expanding brackets",
+        "Expand single and double brackets, then simplify."
+      ],
+      [
+        "Factorising using the highest common factor",
+        "Take out numerical and algebraic common factors and check by expanding. Progress to simple quadratics when ready."
+      ],
+      [
+        "Linear equations",
+        "Solve equations with brackets, fractional coefficients and unknowns on both sides."
+      ],
+      [
+        "Forming equations",
+        "Translate words, diagrams and contexts into equations."
+      ],
+      [
+        "Rearranging formulae",
+        "Change the subject where it appears once, including powers and roots."
+      ],
+      [
+        "Connected algebra problems",
+        "Select methods, review your understanding and use feedback to correct misconceptions."
+      ]
+    ]
+  },
+  {
+    "id": "gcse-number",
+    "label": "GCSE HIGHER · GRADE 7+",
+    "title": "GCSE Higher Number Essentials",
+    "subtitle": "Exact Methods and Problem Solving",
+    "board": "AQA · 8300 Higher / Edexcel · 1MA1 Higher",
+    "audience": "For AQA or Edexcel GCSE Higher students aiming for Grade 7 or above.",
+    "description": "Develop accurate number methods and tackle demanding problems through guided teaching and feedback.",
+    "focus": [
+      "Exact fractions, recurring decimals and indices.",
+      "Standard form, surds and rationalising denominators.",
+      "Bounds, accuracy and connected number problems."
+    ],
+    "saturday": "2:30–3:45 pm",
+    "office": "Thursday, 6:30–7:30 pm",
+    "outline": [
+      [
+        "Fractions",
+        "Calculate exactly with fractions and mixed numbers in problems involving several steps."
+      ],
+      [
+        "Recurring decimals",
+        "Convert recurring decimals to fractions and explain the algebraic method."
+      ],
+      [
+        "Indices",
+        "Understand and apply negative and fractional powers."
+      ],
+      [
+        "Standard form",
+        "Calculate, compare quantities and solve problems in context."
+      ],
+      [
+        "Surds",
+        "Simplify, combine, multiply and expand expressions exactly."
+      ],
+      [
+        "Rationalising denominators",
+        "Work with single surds and two-term denominators."
+      ],
+      [
+        "Bounds and accuracy",
+        "Use error intervals and choose appropriate bounds for calculations."
+      ],
+      [
+        "Connected number problems",
+        "Select methods, review your understanding and use feedback to correct misconceptions."
+      ]
+    ]
+  }
+];
+
+const steps = [
+  {
+    "title": "Learn on Saturday",
+    "description": "Clear explanations, carefully modelled solutions and guided practice introduce the weekly focus."
+  },
+  {
+    "title": "Apply on Sunday",
+    "description": "Complete a short task between lessons, then tackle deeper problems, discuss methods and act on feedback."
+  },
+  {
+    "title": "Practise during the week",
+    "description": "Complete independent practice, submit written working and use optional drop-in support to address questions."
+  }
+];
+
+const questions = [
+  {
+    "question": "Which course should I choose?",
+    "answer": "Choose according to your examination board, current understanding and goals. Grade 8 Accelerated develops demanding IGCSE algebra; Grade 9 Targeted Support focuses on indices, sequences, functions and probability; Year 10 Head Start builds algebra foundations. GCSE Number Essentials supports AQA and Edexcel Higher students aiming for Grade 7 or above. A short diagnostic before the paid course helps check suitability and identify gaps."
+  },
+  {
+    "question": "Which examination boards do the courses cover?",
+    "answer": "The three IGCSE courses cover Pearson Edexcel International GCSE Mathematics A (4MA1), Higher Tier, on the linear pathway. GCSE Number Essentials covers AQA GCSE Mathematics (8300) and Pearson Edexcel GCSE Mathematics (1MA1), Higher Tier."
+  },
+  {
+    "question": "Is the introduction week free?",
+    "answer": "Yes. The two shared student lessons on 1 and 5 November 2026 and the parent question-and-answer session on 7 November are free. The student lessons cover mathematical skills that overlap across all four groups. They are followed by separate eight-week paid courses, with outlines shared here. Paid-course start dates, Sunday lesson times and fees will be confirmed before enrolment."
+  },
+  {
+    "question": "How are lessons delivered?",
+    "answer": "Lessons are taught live online, with two 75-minute lessons each week: Saturday for teaching and guided practice, and Sunday for deeper problems and feedback. Practice tasks and supporting resources are shared through Google Classroom. All advertised times are Dubai time."
+  },
+  {
+    "question": "What work is expected between lessons?",
+    "answer": "Students complete a short task between Saturday and Sunday, then independent practice during the week. They should submit written working when requested and act on feedback. Optional drop-in support is available on Wednesday for IGCSE students and Thursday for GCSE students."
+  },
+  {
+    "question": "Is there an end-of-course test?",
+    "answer": "Yes. After the final teaching session, students complete a test covering the eight-week course under agreed conditions. Feedback identifies strengths, areas for improvement and recommended next steps."
+  },
+  {
+    "question": "What equipment will students need?",
+    "answer": "A reliable internet connection, a computer or suitable tablet, access to Google Classroom, a mathematics notebook, writing materials and a scientific calculator suitable for their qualification."
+  }
+];
+
+function FreeResourcesMenu({ mobile = false }: { mobile?: boolean }) {
+  const menuRef = useRef<HTMLDetailsElement>(null);
+
+  useEffect(() => {
+    function closeOutside(event: PointerEvent) {
+      const menu = menuRef.current;
+      if (menu && event.target instanceof Node && !menu.contains(event.target)) {
+        menu.open = false;
+      }
+    }
+    document.addEventListener("pointerdown", closeOutside);
+    return () => document.removeEventListener("pointerdown", closeOutside);
+  }, []);
+
+  return (
+    <details ref={menuRef} className={`wrdm-resources-menu${mobile ? " wrdm-resources-mobile" : ""}`}
+      onPointerEnter={(event) => {
+        if (!mobile && event.pointerType === "mouse") event.currentTarget.open = true;
+      }}
+      onPointerLeave={(event) => {
+        if (!mobile && event.pointerType === "mouse" && !event.currentTarget.contains(document.activeElement)) {
+          event.currentTarget.open = false;
+        }
+      }}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+          event.currentTarget.open = false;
+        }
+      }}
+      onKeyDown={(event) => {
+        if (event.key === "Escape") {
+          event.stopPropagation();
+          event.currentTarget.open = false;
+          event.currentTarget.querySelector<HTMLElement>("summary")?.focus();
+        }
+      }}>
+      <summary className="wrdm-button wrdm-secondary">
+        Free Resources
+        <svg className="wrdm-resources-chevron" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </summary>
+      <div className="wrdm-resources-links">
+        <a href="/resources/worksheets" onClick={() => { if (menuRef.current) menuRef.current.open = false; }}>
+          <span>Worksheets</span><small>For teachers and students</small>
+        </a>
+        <a href="/resources/lesson-slides" onClick={() => { if (menuRef.current) menuRef.current.open = false; }}>
+          <span>Lesson Slides</span><small>For teachers</small>
+        </a>
+      </div>
+    </details>
   );
 }
 
@@ -70,715 +382,447 @@ export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <main className="relative min-h-screen bg-black text-white">
+    <div className="wrdm-site">
       <MathWatermark />
+      <style jsx global>{`
+        .wrdm-site {
+          --navy: #172338;
+          --gold: #927020;
+          --muted: #475569;
+          position: relative;
+          isolation: isolate;
+          min-height: 100vh;
+          background: #fdfcf9;
+          color: var(--navy);
+          color-scheme: light;
+          font-family: var(--font-geist-sans, "Segoe UI"), Arial, sans-serif;
+          -webkit-font-smoothing: antialiased;
+        }
+        .wrdm-site *, .wrdm-site *::before, .wrdm-site *::after { box-sizing: border-box; }
+        .wrdm-site h1, .wrdm-site h2, .wrdm-site h3, .wrdm-site p { margin: 0; }
+        .wrdm-site a { color: inherit; text-decoration: none; }
+        .wrdm-site a, .wrdm-site button {
+          transition: color 180ms ease, background-color 180ms ease,
+            border-color 180ms ease, box-shadow 180ms ease;
+        }
+        .wrdm-site a:focus-visible, .wrdm-site button:focus-visible,
+        .wrdm-site summary:focus-visible {
+          outline: 3px solid var(--gold);
+          outline-offset: 5px;
+        }
+        .wrdm-site ::selection { background: #eee4cb; color: var(--navy); }
+        .wrdm-site .wrdm-container { width: min(100% - 4rem, 1280px); margin-inline: auto; }
+        .wrdm-site .wrdm-content, .wrdm-site .wrdm-footer { position: relative; z-index: 10; }
+        .wrdm-site section[id], .wrdm-site h3[id] { scroll-margin-top: 7rem; }
+        .wrdm-site .wrdm-header {
+          position: fixed;
+          inset: 0 0 auto;
+          z-index: 50;
+          background: rgba(255,255,255,.94);
+          backdrop-filter: blur(18px);
+          border-bottom: 1px solid rgba(146,112,32,.16);
+          box-shadow: 0 3px 24px rgba(23,35,56,.025);
+        }
+        .wrdm-site .wrdm-header-row {
+          display: flex; align-items: center; justify-content: space-between;
+          gap: 1.5rem; min-height: 74px;
+        }
+        .wrdm-site .wrdm-brand { color: var(--gold); font-weight: 700; letter-spacing: .03em; font-size: 1.15rem; }
+        .wrdm-site .wrdm-desktop-nav { display: flex; align-items: center; gap: 1rem; }
+        .wrdm-site .wrdm-desktop-nav a { font-size: .85rem; color: var(--muted); font-weight: 500; }
+        .wrdm-site .wrdm-desktop-nav a:hover, .wrdm-site .wrdm-footer a:hover { color: var(--gold); }
+        .wrdm-site .wrdm-button {
+          display: inline-flex; align-items: center; justify-content: center;
+          min-height: 48px; padding: .9rem 1.5rem;
+          border: 1px solid transparent; border-radius: .8rem;
+          font-size: .9rem; font-weight: 600; text-align: center; line-height: 1.5;
+        }
+        .wrdm-site .wrdm-primary {
+          color: #fff; background: linear-gradient(135deg, #172338, #263a53);
+          box-shadow: 0 6px 16px rgba(23,35,56,.1);
+        }
+        .wrdm-site .wrdm-primary:hover { background: #263c59; box-shadow: 0 8px 24px rgba(23,35,56,.17); }
+        .wrdm-site .wrdm-secondary { background: rgba(255,255,255,.94); border-color: #d8dce2; color: var(--navy); }
+        .wrdm-site .wrdm-secondary:hover { border-color: var(--gold); background: #fff; }
+        .wrdm-site .wrdm-header-actions { display: flex; align-items: center; gap: .65rem; }
+        .wrdm-site .wrdm-header-actions .wrdm-button { padding-inline: 1rem; font-size: .82rem; }
+        .wrdm-site .wrdm-resources-menu { position: relative; }
+        .wrdm-site .wrdm-resources-menu summary { cursor: pointer; list-style: none; gap: .6rem; }
+        .wrdm-site .wrdm-resources-menu summary::-webkit-details-marker { display: none; }
+        .wrdm-site .wrdm-resources-chevron { flex-shrink: 0; color: var(--gold); transition: transform 180ms ease; }
+        .wrdm-site .wrdm-resources-menu[open] .wrdm-resources-chevron { transform: rotate(180deg); }
+        .wrdm-site .wrdm-resources-links { position: absolute; right: 0; top: calc(100% + .6rem); width: 260px; padding: .4rem; background: #fff; border: 1px solid #ded5bf; border-radius: .8rem; box-shadow: 0 10px 30px rgba(23,35,56,.12); }
+        .wrdm-site .wrdm-resources-links::before { content: ""; position: absolute; left: 0; right: 0; top: -.7rem; height: .7rem; }
+        .wrdm-site .wrdm-resources-links a { display: block; padding: .8rem; border-radius: .5rem; }
+        .wrdm-site .wrdm-resources-links a:hover { background: #f5f2e9; }
+        .wrdm-site .wrdm-resources-links span { display: block; font-size: .9rem; font-weight: 600; }
+        .wrdm-site .wrdm-resources-links small { display: block; margin-top: .2rem; color: var(--muted); font-size: .77rem; }
+        .wrdm-site .wrdm-resources-mobile { margin: .5rem 0; }
+        .wrdm-site .wrdm-resources-mobile summary { width: 100%; justify-content: space-between; }
+        .wrdm-site .wrdm-resources-mobile .wrdm-resources-links { position: static; width: 100%; margin-top: .5rem; box-shadow: none; }
+        .wrdm-site .wrdm-menu-toggle { display: none; cursor: pointer; }
+        .wrdm-site .wrdm-mobile-nav {
+          padding: 1.2rem 0 1.5rem; border-top: 1px solid #e8e3d8;
+          max-height: calc(100dvh - 82px); overflow-y: auto;
+        }
+        .wrdm-site .wrdm-mobile-links { display: flex; flex-direction: column; gap: .5rem; }
+        .wrdm-site .wrdm-mobile-links > a:not(.wrdm-button) { padding: .75rem 0; color: var(--muted); }
+        .wrdm-site .wrdm-eyebrow { color: var(--gold); font-size: .7rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+        .wrdm-site .wrdm-hero {
+          display: block; padding: 8rem 0 3rem;
+        }
+        .wrdm-site .wrdm-hero-copy { min-width: 0; }
+        .wrdm-site .wrdm-hero-copy > .wrdm-eyebrow { display: flex; align-items: center; gap: 1rem; }
+        .wrdm-site .wrdm-hero-copy > .wrdm-eyebrow::before { content: ""; width: 2.5rem; height: 1px; background: var(--gold); }
+        .wrdm-site h1 {
+          margin-top: 1.1rem; max-width: none;
+          font-size: clamp(2.6rem, 4.5vw, 4.2rem); font-weight: 600;
+          line-height: 1.12; letter-spacing: -.045em; text-wrap: balance;
+        }
+        .wrdm-site .wrdm-hero-tagline { margin-top: 1.2rem; font-size: 1.05rem; font-weight: 500; }
+        .wrdm-site .wrdm-hero-description { margin-top: .8rem; max-width: 980px; color: var(--muted); font-size: .97rem; line-height: 1.8; }
+        .wrdm-site .wrdm-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.4rem; }
+        .wrdm-site .wrdm-launch-date {
+          display: inline-flex; flex-wrap: wrap; align-items: center; gap: .35rem .65rem;
+          margin-top: 1.25rem; padding: .6rem 1rem; border: 1px solid #ded5bf;
+          border-radius: .6rem; background: rgba(255,255,255,.85);
+          color: var(--navy); font-size: .85rem; line-height: 1.6;
+        }
+        .wrdm-site .wrdm-launch-date strong { color: var(--gold); font-weight: 600; }
+        .wrdm-site .wrdm-section { padding: 0 0 4.5rem; }
+        .wrdm-site .wrdm-section-heading { margin-bottom: 1.5rem; }
+        .wrdm-site h2 { font-size: clamp(1.9rem, 3.4vw, 2.7rem); font-weight: 600; line-height: 1.2; letter-spacing: -.035em; text-wrap: balance; }
+        .wrdm-site .wrdm-section-heading h2 { margin-top: .75rem; }
+        .wrdm-site .wrdm-course-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.25rem; align-items: start; }
+        .wrdm-site .wrdm-course {
+          display: flex; flex-direction: column; padding: 2rem;
+          background: rgba(255,255,255,.97);
+          border: 1px solid rgba(146,112,32,.19); border-top: 3px solid #b4975b;
+          border-radius: 1.3rem; box-shadow: 0 8px 32px rgba(23,35,56,.035);
+        }
+        .wrdm-site .wrdm-course h3 { margin-top: 1rem; font-size: 1.55rem; line-height: 1.3; letter-spacing: -.025em; font-weight: 600; }
+        .wrdm-site .wrdm-course-subtitle { margin-top: .4rem; color: var(--gold); font-weight: 600; font-size: .95rem; }
+        .wrdm-site .wrdm-course-audience { margin-top: 1.2rem; font-size: .95rem; line-height: 1.75; font-weight: 500; }
+        .wrdm-site .wrdm-course-description { margin-top: .85rem; color: var(--muted); font-size: .9rem; line-height: 1.8; }
+        .wrdm-site .wrdm-course ul { list-style: none; margin: 1.5rem 0 1.8rem; padding: 1.3rem 0 0; border-top: 1px solid #ede9e0; }
+        .wrdm-site .wrdm-course li { position: relative; padding-left: 1rem; font-size: .87rem; line-height: 1.8; color: var(--muted); }
+        .wrdm-site .wrdm-course li + li { margin-top: .6rem; }
+        .wrdm-site .wrdm-course li::before { content: ""; position: absolute; left: 0; top: .65rem; width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
+        .wrdm-site .wrdm-course-bottom { margin-top: auto; }
+        .wrdm-site .wrdm-course-duration { font-size: .77rem; color: var(--gold); margin-bottom: 1rem; }
+        .wrdm-site .wrdm-course .wrdm-button { width: 100%; }
+        .wrdm-site .wrdm-steps { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 2.3rem; padding-top: 1.8rem; border-top: 1px solid rgba(146,112,32,.23); }
+        .wrdm-site .wrdm-step-number { font-family: Georgia, serif; color: var(--gold); font-size: 2.5rem; line-height: 1; }
+        .wrdm-site .wrdm-step h3 { margin-top: 1rem; font-size: 1.35rem; font-weight: 600; letter-spacing: -.02em; }
+        .wrdm-site .wrdm-step p { margin-top: .75rem; color: var(--muted); font-size: .95rem; line-height: 1.8; max-width: 340px; }
+        .wrdm-site .wrdm-teacher-panel { display: grid; grid-template-columns: 300px 1fr; align-items: center; gap: 3.5rem; padding: 2.5rem; background: rgba(255,255,255,.97); border: 1px solid rgba(146,112,32,.18); border-radius: 1.5rem; box-shadow: 0 8px 32px rgba(23,35,56,.035); }
+        .wrdm-site .wrdm-portrait { overflow: hidden; border-radius: 1rem; background: #f2efe7; border: 1px solid #e8e3d8; }
+        .wrdm-site .wrdm-portrait img { display: block; width: 100%; height: auto; }
+        .wrdm-site .wrdm-teacher-copy h2 { margin-top: .8rem; }
+        .wrdm-site .wrdm-teacher-role { margin-top: .6rem; color: var(--gold); font-size: .9rem; }
+        .wrdm-site .wrdm-teacher-bio { margin-top: 1.5rem; color: var(--muted); line-height: 1.9; font-size: 1rem; }
+        .wrdm-site .wrdm-teacher-bio + .wrdm-teacher-bio { margin-top: 1rem; }
+        .wrdm-site .wrdm-faq-layout { display: grid; grid-template-columns: 1fr 1.7fr; gap: 3rem; }
+        .wrdm-site .wrdm-faq-list { border-top: 1px solid #dfd9cc; }
+        .wrdm-site .wrdm-faq-list details { border-bottom: 1px solid #dfd9cc; background: rgba(253,252,249,.8); }
+        .wrdm-site .wrdm-faq-list summary { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.4rem .25rem; list-style: none; cursor: pointer; font-size: .98rem; font-weight: 600; line-height: 1.6; }
+        .wrdm-site .wrdm-faq-list summary::-webkit-details-marker { display: none; }
+        .wrdm-site .wrdm-faq-list summary::after { content: "+"; color: var(--gold); font-size: 1.5rem; font-weight: 400; flex-shrink: 0; }
+        .wrdm-site .wrdm-faq-list details[open] summary::after { content: "−"; }
+        .wrdm-site .wrdm-faq-list details p { padding: 0 .25rem 1.5rem; font-size: .95rem; color: var(--muted); line-height: 1.9; }
+        .wrdm-site .wrdm-register-panel { padding: 3.5rem 2rem; text-align: center; background: linear-gradient(135deg,#fff,#f5f2e9); border: 1px solid rgba(146,112,32,.24); border-radius: 1.5rem; }
+        .wrdm-site .wrdm-register-panel h2 { margin-top: .9rem; }
+        .wrdm-site .wrdm-register-panel > p:not(.wrdm-eyebrow) { max-width: 600px; margin: 1.3rem auto 1.7rem; color: var(--muted); line-height: 1.85; }
+        .wrdm-site .wrdm-footer { background: rgba(255,255,255,.97); border-top: 1px solid rgba(146,112,32,.2); padding: 2.5rem 0 1.5rem; }
+        .wrdm-site .wrdm-footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; }
+        .wrdm-site .wrdm-footer-description { margin-top: .6rem; color: var(--muted); font-size: .85rem; line-height: 1.8; }
+        .wrdm-site .wrdm-footer-links { display: flex; flex-wrap: wrap; gap: .7rem 1.3rem; font-size: .82rem; color: var(--muted); }
+        .wrdm-site .wrdm-footer-contact { display: block; margin-bottom: .9rem; font-size: .85rem; color: var(--muted); overflow-wrap: anywhere; }
+        .wrdm-site .wrdm-footer-bottom { display: flex; justify-content: space-between; gap: 1.5rem; margin-top: 2rem; padding-top: 1.3rem; border-top: 1px solid #ece8de; }
+        .wrdm-site .wrdm-copyright { color: var(--muted); font-size: .75rem; line-height: 1.8; }
+        @media (max-width: 1279px) {
+          .wrdm-site .wrdm-desktop-nav, .wrdm-site .wrdm-header-actions { display: none; }
+          .wrdm-site .wrdm-menu-toggle { display: inline-flex; }
+          .wrdm-site .wrdm-course { padding: 1.5rem; }
+        }
+        @media (min-width: 1280px) { .wrdm-site .wrdm-mobile-nav { display: none; } }
+        @media (max-width: 899px) {
+          .wrdm-site .wrdm-hero { display: block; padding-top: 7.5rem; }
+          .wrdm-site .wrdm-course-grid { grid-template-columns: 1fr; }
+          .wrdm-site .wrdm-course { padding: 2rem; }
+          .wrdm-site .wrdm-course ul { display: grid; grid-template-columns: 1fr; }
+          .wrdm-site .wrdm-teacher-panel { grid-template-columns: 220px 1fr; gap: 2rem; padding: 2rem; }
+          .wrdm-site .wrdm-faq-layout { grid-template-columns: 1fr; gap: 0; }
+        }
+        @media (max-width: 639px) {
+          .wrdm-site .wrdm-container { width: calc(100% - 2.5rem); }
+          .wrdm-site .wrdm-header-row { min-height: 74px; }
+          .wrdm-site .wrdm-hero { padding: 6.7rem 0 2.5rem; }
+          .wrdm-site h1 { font-size: clamp(2.3rem,9vw,3.4rem); }
+          .wrdm-site .wrdm-hero-copy > .wrdm-eyebrow { font-size: .62rem; letter-spacing: .12em; gap: .6rem; }
+          .wrdm-site .wrdm-hero-copy > .wrdm-eyebrow::before { width: 1.5rem; }
+          .wrdm-site .wrdm-actions { flex-direction: column; align-items: stretch; }
+          .wrdm-site .wrdm-section { padding-bottom: 4rem; }
+          .wrdm-site .wrdm-course { padding: 1.5rem; }
+          .wrdm-site .wrdm-steps { grid-template-columns: 1fr; gap: 1rem; }
+          .wrdm-site .wrdm-step { display: grid; grid-template-columns: 3rem 1fr; column-gap: 1rem; }
+          .wrdm-site .wrdm-step-number { grid-row: span 2; }
+          .wrdm-site .wrdm-step h3 { margin-top: 0; }
+          .wrdm-site .wrdm-step p { max-width: none; }
+          .wrdm-site .wrdm-teacher-panel { grid-template-columns: 1fr; gap: 1.8rem; padding: 1.5rem; }
+          .wrdm-site .wrdm-portrait { width: min(100%,280px); }
+          .wrdm-site .wrdm-register-panel { padding: 2.5rem 1.5rem; }
+          .wrdm-site .wrdm-footer-top, .wrdm-site .wrdm-footer-bottom { flex-direction: column; }
+        }
 
-<header className="fixed top-0 z-50 w-full border-b border-yellow-400/20 bg-black/70 backdrop-blur-xl">
-  <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-    <p className="text-lg font-bold tracking-wide text-yellow-400">
-      #WRDM
-    </p>
+        .wrdm-site .wrdm-course-board { margin-top: .8rem; font-size: .78rem; line-height: 1.6; color: var(--muted); }
+        .wrdm-site .wrdm-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+        .wrdm-site .wrdm-outline, .wrdm-site .wrdm-timetable { border-top: 1px solid #e5dfd2; }
+        .wrdm-site .wrdm-outline summary, .wrdm-site .wrdm-timetable summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 0; cursor: pointer; list-style: none; font-size: .88rem; font-weight: 600; line-height: 1.6; }
+        .wrdm-site .wrdm-outline summary::-webkit-details-marker, .wrdm-site .wrdm-timetable summary::-webkit-details-marker { display: none; }
+        .wrdm-site .wrdm-outline summary::after, .wrdm-site .wrdm-timetable summary::after { content: '+'; color: var(--gold); font-size: 1.3rem; flex-shrink: 0; }
+        .wrdm-site details.wrdm-outline[open] summary::after, .wrdm-site details.wrdm-timetable[open] summary::after { content: '−'; }
+        .wrdm-site .wrdm-outline ol { list-style: none; padding: 0; margin: 0; }
+        .wrdm-site .wrdm-outline ol li { display: grid; grid-template-columns: 3.7rem 1fr; gap: .75rem; padding: .9rem 0; border-top: 1px solid #eeeae1; }
+        .wrdm-site .wrdm-outline ol li + li { margin-top: 0; }
+        .wrdm-site .wrdm-outline ol li::before { content: none; }
+        .wrdm-site .wrdm-week-label { color: var(--gold); font-size: .77rem; font-weight: 600; }
+        .wrdm-site .wrdm-outline h4 { margin: 0; font-size: .87rem; color: var(--navy); font-weight: 600; line-height: 1.6; }
+        .wrdm-site .wrdm-outline li p { margin-top: .3rem; font-size: .83rem; line-height: 1.7; }
+        .wrdm-site .wrdm-outline-test, .wrdm-site .wrdm-timetable > p { padding: .8rem 0 1rem; color: var(--muted); font-size: .8rem; line-height: 1.8; }
+        .wrdm-site .wrdm-timetable dl { margin: 0; font-size: .83rem; line-height: 1.7; }
+        .wrdm-site .wrdm-timetable dl > div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .3rem 1rem; padding: .6rem 0; }
+        .wrdm-site .wrdm-timetable dt { font-weight: 600; }
+        .wrdm-site .wrdm-timetable dd { margin: 0; color: var(--muted); }
+        .wrdm-site .wrdm-course-bottom { padding-top: 1.3rem; }
+        .wrdm-site .wrdm-course-duration { line-height: 1.9; }
+        .wrdm-site .wrdm-follow-on { margin-top: 1.5rem; padding: 1.5rem 1.75rem; border-left: 3px solid #b4975b; background: rgba(255,255,255,.88); border-radius: 0 .8rem .8rem 0; }
+        .wrdm-site .wrdm-follow-on h3 { font-size: 1.15rem; font-weight: 600; }
+        .wrdm-site .wrdm-follow-on p { margin-top: .6rem; color: var(--muted); font-size: .9rem; line-height: 1.85; max-width: 1050px; }
+        .wrdm-site .wrdm-intro-panel { padding: 2rem; background: rgba(255,255,255,.94); border: 1px solid #ded5bf; border-radius: 1.3rem; }
+        .wrdm-site .wrdm-intro-panel h2 { font-size: clamp(1.6rem,2.6vw,2.2rem); }
+        .wrdm-site .wrdm-section-description { margin-top: .8rem; max-width: 980px; color: var(--muted); font-size: .93rem; line-height: 1.85; }
+        .wrdm-site .wrdm-intro-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1.5rem; }
+        .wrdm-site .wrdm-intro-grid article { padding-top: 1.1rem; border-top: 1px solid #e6dfcf; }
+        .wrdm-site .wrdm-intro-grid h3 { margin-top: .65rem; font-size: 1.05rem; font-weight: 600; line-height: 1.5; }
+        .wrdm-site .wrdm-intro-grid article > p:last-child { margin-top: .75rem; font-size: .87rem; color: var(--muted); line-height: 1.9; }
+        .wrdm-site .wrdm-intro-note { margin: 1.4rem 0 1rem; color: var(--muted); font-size: .82rem; line-height: 1.8; }
+        .wrdm-site .wrdm-assessment-note { margin-top: 1.7rem; padding-top: 1.2rem; border-top: 1px solid #ded5bf; font-size: .9rem; color: var(--muted); line-height: 1.85; }
+        .wrdm-site .wrdm-assessment-note strong { color: var(--navy); }
+        @media (max-width: 639px) {
+          .wrdm-site .wrdm-intro-panel { padding: 1.5rem; }
+          .wrdm-site .wrdm-intro-grid { grid-template-columns: 1fr; gap: 1.1rem; }
+          .wrdm-site .wrdm-intro-panel .wrdm-button { width: 100%; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .wrdm-site *, .wrdm-site *::before, .wrdm-site *::after { animation: none !important; transition: none !important; }
+        }
+      `}</style>
 
-    <nav className="hidden items-center gap-8 md:flex">
-      <a href="#how" className="text-sm text-slate-300 hover:text-yellow-400">
-        How It Works
-      </a>
-
-      <a href="#about" className="text-sm text-slate-300 hover:text-yellow-400">
-        About
-      </a>
-
-      <a href="#founder" className="text-sm text-slate-300 hover:text-yellow-400">
-        Founder
-      </a>
-
-      <a href="#faq" className="text-sm text-slate-300 hover:text-yellow-400">
-        FAQ
-      </a>
-
-      <a href="#parents" className="text-sm text-slate-300 hover:text-yellow-400">
-        Parents
-      </a>
-
-      <a href="#programmes" className="text-sm text-slate-300 hover:text-yellow-400">
-        Programmes
-      </a>
-
-      <a
-        href={FORM_LINK}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-sm text-slate-300 hover:text-yellow-400"
-      >
-        Enrolment
-      </a>
-    </nav>
-
-    <a
-      href={FORM_LINK}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="hidden rounded-full bg-yellow-400 px-5 py-2 text-sm font-semibold text-black hover:bg-yellow-300 md:block"
-    >
-      Apply Now
-    </a>
-
-    <button
-      onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-      className="rounded-full border border-yellow-400/30 px-4 py-2 text-sm font-semibold text-yellow-400 md:hidden"
-    >
-      Menu
-    </button>
-  </div>
-
-  {mobileMenuOpen && (
-    <div className="border-t border-yellow-400/10 bg-black/95 px-6 py-6 md:hidden">
-      <div className="flex flex-col gap-5 text-sm text-slate-300">
-        {[
-          ["How It Works", "#how"],
-          ["About", "#about"],
-          ["Founder", "#founder"],
-          ["FAQ", "#faq"],
-          ["Parents", "#parents"],
-          ["Programmes", "#programmes"],
-        ].map(([label, href]) => (
-          <a
-            key={label}
-            href={href}
-            onClick={() => setMobileMenuOpen(false)}
-            className="hover:text-yellow-400"
-          >
-            {label}
-          </a>
-        ))}
-
-        <a
-          href={FORM_LINK}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="rounded-full bg-yellow-400 px-5 py-3 text-center font-semibold text-black hover:bg-yellow-300"
-        >
-          Apply Now
-        </a>
-
-        <a
-          href="mailto:admin@wereallydomaths.info"
-          className="text-slate-300 hover:text-yellow-400"
-        >
-          Contact
-        </a>
-      </div>
-    </div>
-  )}
-</header>
-
-      <section className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-6 pb-24 pt-40">
-        <p className="mb-6 text-sm font-semibold uppercase tracking-[0.25em] text-yellow-400">
-          #WEREALLYDOMATHS.COM
-        </p>
-
-        <h1 className="max-w-7xl text-6xl font-bold leading-[0.95] tracking-tight md:text-8xl">
-          Master Higher Tier Edexcel
-          <br />
-          IGCSE Mathematics
-        </h1>
-
-        <a
-  href={FORM_LINK}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="mt-8 inline-flex w-fit rounded-full border border-yellow-400/30 bg-black/60 px-5 py-3 text-sm font-semibold text-yellow-300 backdrop-blur-sm transition hover:border-yellow-400/60 hover:bg-yellow-400/10 hover:text-yellow-200"
->
-  2026–2027 Cohort Begins Monday, 3 August 2026
-</a>
-
-        <div className="mt-10 flex max-w-6xl flex-wrap gap-4 text-lg text-slate-300 md:text-xl">
-          <span>Structured Weekly Live Lessons</span>
-          <span className="text-yellow-400">∞</span>
-          <span>Guided Exam Practice</span>
-          <span className="text-yellow-400">∞</span>
-          <span>Mastery Cycles</span>
-          <span className="text-yellow-400">∞</span>
-          <span>Google Classroom Resources</span>
-          <span className="text-yellow-400">∞</span>
-          <span>AI-Assisted Feedback</span>
-        </div>
-
-        <div className="mt-14 flex flex-col gap-4 sm:flex-row">
-          <a href="#programmes" className="rounded-full bg-yellow-400 px-8 py-4 text-center text-lg font-semibold text-black hover:bg-yellow-300">
-            Explore The Programmes
-          </a>
-
-          <a href={FORM_LINK} target="_blank" rel="noopener noreferrer" className="rounded-full border border-yellow-400/30 bg-black/50 px-8 py-4 text-center text-lg font-semibold text-white backdrop-blur-sm hover:text-yellow-400">
-            Join The 2026–2027 Cohort
-          </a>
-        </div>
-      </section>
-
-      <section id="how" className="relative z-10 mx-auto max-w-7xl px-6 pb-32">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-yellow-400">
-            HOW THE ACADEMY WORKS
-          </p>
-
-          <h2 className="mt-4 text-4xl font-bold md:text-6xl">
-            A Structured System For Long-Term Mathematical Mastery
-          </h2>
-
-          <p className="mt-8 text-lg leading-8 text-slate-300 md:text-xl">
-            Mathematical success is developed through preparation, guided
-            instruction, deliberate practice, meaningful feedback, and
-            consistent reflection over time.
-          </p>
-        </div>
-
-        <div className="mt-20 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {[
-            {
-              number: "01",
-              title: "Prepare Before The Lesson",
-              text: "Students engage with guided preparation material before each Mastery Cycle to build familiarity with key methods, vocabulary, and concepts.",
-            },
-            {
-              number: "02",
-              title: "Attend Live Online Lessons",
-              text: "Interactive Higher Tier lessons focus on mathematical reasoning, exam technique, problem-solving strategies, and clear worked modelling.",
-            },
-            {
-              number: "03",
-              title: "Complete Deliberate Exam Practice",
-              text: "After each session, students complete carefully selected exam-style tasks through Dr Frost Maths, where immediate automated feedback supports independent practice and helps identify weaker topic areas.",
-            },
-            {
-              number: "04",
-              title: "Upload Written Mathematical Working",
-              text: "Students upload scanned written solutions through Google Classroom to support deeper analysis of mathematical reasoning, method accuracy, working structure, and exam-style communication.",
-            },
-            {
-              number: "05",
-              title: "Receive AI-Assisted Feedback",
-              text: "AI-assisted analysis helps identify gaps in reasoning, inefficient methods, notation errors, and missed mark-scheme opportunities to support stronger exam performance beyond final answers alone.",
-            },
-            {
-              number: "06",
-              title: "Access Optional Office Hours",
-              text: "Students may attend bookable office hour sessions for additional guidance, question review, targeted clarification, and deeper mathematical discussion when needed.",
-            },
-          ].map((card) => (
-            <div key={card.number} className="rounded-[2rem] border border-yellow-400/15 bg-black/70 p-8 backdrop-blur-md transition duration-300 hover:border-yellow-400/40 hover:bg-black/80">
-              <p className="text-5xl font-bold text-yellow-400/80">{card.number}</p>
-              <h3 className="mt-6 text-2xl font-bold">{card.title}</h3>
-              <p className="mt-5 leading-8 text-slate-300">{card.text}</p>
-            </div>
-          ))}
-
-          <div className="rounded-[2rem] border border-yellow-400/20 bg-black/75 p-10 backdrop-blur-md md:col-span-2 xl:col-span-3">
-            <p className="text-5xl font-bold text-yellow-400/80">07</p>
-
-            <h3 className="mt-6 text-3xl font-bold">
-              Build Long-Term Mathematical Mastery
-            </h3>
-
-            <p className="mt-5 max-w-5xl text-lg leading-9 text-slate-300">
-              Through consistent preparation, deliberate practice, meaningful
-              feedback, and structured reflection, students steadily improve
-              confidence, independence, mathematical communication, and Higher
-              Tier exam performance over time.
-            </p>
+      <header className="wrdm-header">
+        <div className="wrdm-container wrdm-header-row">
+          <a href="#top" className="wrdm-brand" aria-label="We Really Do Maths home" onClick={() => setMobileMenuOpen(false)}>#WRDM</a>
+          <nav className="wrdm-desktop-nav" aria-label="Main navigation">
+            {navigation.map(([label, href]) => <a key={href} href={href}>{label}</a>)}
+          </nav>
+          <div className="wrdm-header-actions">
+            <FreeResourcesMenu />
+            <a href={FORM_LINK} target="_blank" rel="noopener noreferrer" className="wrdm-button wrdm-primary wrdm-header-apply">Register Your Interest</a>
           </div>
+          <button type="button" className="wrdm-button wrdm-secondary wrdm-menu-toggle"
+            aria-expanded={mobileMenuOpen} aria-controls="wrdm-mobile-menu"
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            onClick={() => setMobileMenuOpen((open) => !open)}>
+            {mobileMenuOpen ? "Close" : "Menu"}
+          </button>
         </div>
-      </section>
-      <section id="about" className="relative z-10 mx-auto max-w-7xl px-6 pb-32">
-  <div className="mx-auto max-w-4xl text-center">
-    <p className="text-sm font-semibold uppercase tracking-[0.25em] text-yellow-400">
-      ABOUT #WEREALLYDOMATHS
-    </p>
+        {mobileMenuOpen && (
+          <nav id="wrdm-mobile-menu" className="wrdm-mobile-nav" aria-label="Mobile navigation"
+            onKeyDown={(event) => {
+              if (event.key === "Escape") {
+                setMobileMenuOpen(false);
+                document.querySelector<HTMLButtonElement>(".wrdm-menu-toggle")?.focus();
+              }
+            }}>
+            <div className="wrdm-container wrdm-mobile-links">
+              {navigation.map(([label, href]) => (
+                <a key={href} href={href} onClick={() => setMobileMenuOpen(false)}>{label}</a>
+              ))}
+              <FreeResourcesMenu mobile />
+              <a href={FORM_LINK} target="_blank" rel="noopener noreferrer"
+                className="wrdm-button wrdm-primary" onClick={() => setMobileMenuOpen(false)}>Register Your Interest</a>
+            </div>
+          </nav>
+        )}
+      </header>
 
-    <h2 className="mt-4 text-4xl font-bold leading-tight md:text-6xl">
-      Mathematical Progress Is Built Through Consistent Deliberate Practice
-    </h2>
+      <main id="top" className="wrdm-content">
+        <section className="wrdm-hero wrdm-container" aria-labelledby="hero-title">
+          <div className="wrdm-hero-copy">
+          <p className="wrdm-eyebrow">Our First Course Launch</p>
+          <h1 id="hero-title">Eight-Week GCSE &amp; IGCSE Maths Courses</h1>
+          <p className="wrdm-launch-date"><strong>Free introduction week begins</strong><time dateTime="2026-11-01">1 November 2026</time></p>
+          <p className="wrdm-hero-tagline">Focused teaching. Purposeful practice. Clear goals.</p>
+          <p className="wrdm-hero-description">Our first four focused courses support Edexcel IGCSE and AQA or Edexcel GCSE Higher students. Build Year 10 algebra foundations or work towards Grades 7, 8 and 9, with one clear focus each week.</p>
+          <div className="wrdm-actions">
+            <a href="#courses" className="wrdm-button wrdm-primary">Explore the Courses</a>
+            <a href={FORM_LINK} target="_blank" rel="noopener noreferrer" className="wrdm-button wrdm-secondary">Register Your Interest</a>
+          </div>
+          </div>
+        </section>
 
-    <p className="mt-8 text-lg leading-8 text-slate-300 md:text-xl">
-      At #WeReallyDoMaths, we believe mathematical ability is not fixed.
-      Strong outcomes are developed through structured routines, deliberate
-      practice, meaningful feedback, and consistent effort over time.
-    </p>
+        <section id="free-week" className="wrdm-section wrdm-container" aria-labelledby="free-title">
+          <div className="wrdm-intro-panel">
+            <div className="wrdm-section-heading">
+              <p className="wrdm-eyebrow">Free Introduction Week</p>
+              <h2 id="free-title">One Shared Start. Four Course Pathways.</h2>
+              <p className="wrdm-section-description">Two free live lessons explore repeated percentage change and reverse repeated percentage change: shared mathematical content relevant to all four groups. Learn to use multipliers, connect changes over several stages and work backwards to find an original value.</p>
+            </div>
+            <div className="wrdm-intro-grid">
+              <article><p className="wrdm-eyebrow">Student Lesson 1</p><h3>Repeated percentage change</h3><p><time dateTime="2026-11-01">Sunday, 1 November 2026</time><br />3:00–4:15 pm</p></article>
+              <article><p className="wrdm-eyebrow">Student Lesson 2</p><h3>Reverse repeated percentage change</h3><p><time dateTime="2026-11-05">Thursday, 5 November 2026</time><br />5:00–6:15 pm</p></article>
+              <article><p className="wrdm-eyebrow">For Parents</p><h3>Course information and questions</h3><p><time dateTime="2026-11-07">Saturday, 7 November 2026</time><br />12:00–1:00 pm</p></article>
+            </div>
+            <p className="wrdm-intro-note">All times are Dubai time. After the free introduction week, students join separate eight-week paid courses tailored to their chosen pathway and target level.</p>
+            <a href={FORM_LINK} target="_blank" rel="noopener noreferrer" className="wrdm-button wrdm-primary">Register for the Free Introduction Week</a>
+          </div>
+        </section>
 
-    <p className="mt-6 text-lg leading-8 text-slate-400 md:text-xl">
-      Trajectory matters more than starting position. Students who engage in
-      regular mathematical practice, revisit concepts consistently, and learn
-      from feedback steadily improve confidence, fluency, reasoning, and exam
-      performance over time.
-    </p>
-  </div>
-
-  <div className="mt-20 grid gap-6 md:grid-cols-2">
-    {[
-      {
-        number: "01",
-        title: "Consistency Shapes Mathematical Progress",
-        text: "Long-term mathematical improvement is rarely the result of occasional bursts of revision. Consistent weekly routines, deliberate practice, and sustained engagement have a far greater impact on long-term progress and Higher Tier performance.",
-      },
-      {
-        number: "02",
-        title: "Students Forget What They Do Not Revisit",
-        text: "Mathematical knowledge strengthens when concepts are revisited regularly over time. Structured retrieval, repeated exposure, and carefully sequenced practice help move knowledge into long-term memory and improve recall under exam conditions.",
-      },
-      {
-        number: "03",
-        title: "Feedback Drives Improvement",
-        text: "Students improve more effectively when misconceptions are identified early and addressed consistently. Immediate practice feedback, written solution analysis, and targeted guidance help students refine methods, mathematical communication, and exam technique.",
-      },
-      {
-        number: "04",
-        title: "Confidence Comes Through Competence",
-        text: "Lasting mathematical confidence is built through preparation, practice, reflection, and repeated success over time. Students become more confident when they genuinely understand methods, communicate reasoning clearly, and experience measurable progress.",
-      },
-    ].map((card) => (
-      <div
-        key={card.number}
-        className="rounded-[2rem] border border-yellow-400/15 bg-black/70 p-8 backdrop-blur-md transition duration-300 hover:border-yellow-400/40 hover:bg-black/80"
-      >
-        <p className="text-5xl font-bold text-yellow-400/80">
-          {card.number}
-        </p>
-
-        <h3 className="mt-6 text-2xl font-bold">
-          {card.title}
-        </h3>
-
-        <p className="mt-5 leading-8 text-slate-300">
-          {card.text}
-        </p>
-      </div>
-    ))}
-  </div>
-
-  <div className="mt-14 rounded-[2rem] border border-yellow-400/20 bg-black/75 p-10 text-center backdrop-blur-md">
-    <p className="mx-auto max-w-5xl text-xl leading-9 text-slate-300 md:text-2xl">
-      Strong mathematical outcomes are rarely accidental. They are usually
-      the result of consistent routines, thoughtful teaching, deliberate
-      practice, and sustained effort over time.
-    </p>
-  </div>
-</section> 
-<section id="founder" className="relative z-10 mx-auto max-w-7xl px-6 pb-32">
-  <div className="grid items-center gap-14 lg:grid-cols-2">
-    <div className="relative">
-      <div className="absolute inset-0 rounded-[2rem] bg-yellow-400/10 blur-3xl" />
-
-      <div className="relative overflow-hidden rounded-[2rem] border border-yellow-400/20 bg-black/70">
-        <Image
-          src="/founder.png"
-          alt="Founder of #WeReallyDoMaths"
-          width={1200}
-          height={1400}
-          className="h-full w-full object-cover"
-        />
-      </div>
-    </div>
-
-    <div>
-      <p className="text-sm font-semibold uppercase tracking-[0.25em] text-yellow-400">
-        FOUNDER
-      </p>
-
-      <h2 className="mt-4 text-4xl font-bold md:text-6xl">
-        Mathematics Teaching Built Around Long-Term Mastery
-      </h2>
-
-      <div className="mt-10 space-y-6 text-lg leading-8 text-slate-300">
-        <p>
-          #WeReallyDoMaths was founded by an experienced mathematics teacher
-          with over 10 years of teaching experience across the United Kingdom
-          and Dubai, including GCSE, IGCSE, A Level, and International A Level
-          Mathematics.
-        </p>
-
-        <p>
-          The founder holds two MSc degrees in Mathematics and remains actively
-          engaged in graduate-level mathematical research alongside ongoing
-          teacher development and instructional refinement.
-        </p>
-
-        <p>
-          Recent examination cohorts taught by the founder within full-time
-          classroom teaching practice have included 97% of students attaining
-          Grade 9 outcomes in Edexcel IGCSE Mathematics.
-        </p>
-
-        <p>
-          The educational philosophy behind #WeReallyDoMaths is strongly rooted
-          in deliberate practice, retrieval, structured routines, meaningful
-          feedback, and the belief that long-term mathematical growth is built
-          through sustained effort and consistency over time.
-        </p>
-
-        <p>
-          Alongside direct classroom teaching, continued engagement with
-          educational systems, curriculum design, assessment strategy, and
-          teacher development supports ongoing refinement of instructional
-          practice and long-term student outcomes.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>  
-<section id="faq" className="relative z-10 mx-auto max-w-7xl px-6 pb-32">
-  <div className="mx-auto max-w-4xl text-center">
-    <p className="text-sm font-semibold uppercase tracking-[0.25em] text-yellow-400">
-      FREQUENTLY ASKED QUESTIONS
-    </p>
-
-    <h2 className="mt-4 text-4xl font-bold md:text-6xl">
-      Programme Information
-    </h2>
-
-    <p className="mt-8 text-lg leading-8 text-slate-300 md:text-xl">
-      Important information about programme structure, expectations,
-      preparation, independent practice, and student support.
-    </p>
-  </div>
-
-  <div className="mt-20 space-y-6">
-    {[
-      {
-        question: "Who is the programme designed for?",
-        answer:
-          "The programme is designed for students in Years 8 to 11 studying or preparing to study Higher Tier Edexcel IGCSE Mathematics. The programmes support students currently preparing for IGCSE examinations, students seeking stronger mathematical foundations before entering examination years, and students pursuing accelerated pathways or early entry examination routes offered by some schools. #WeReallyDoMaths is designed to support long-term mathematical development through structured routines, deliberate practice, guided feedback, and consistent preparation over time.",
-      },
-      {
-        question: "Which examination board is covered?",
-        answer:
-          "#WeReallyDoMaths currently focuses on students preparing for Pearson Edexcel International GCSE Mathematics A (4MA1) Higher Tier on the linear pathway for grades 9–1. Teaching, practice materials, retrieval activities, and exam preparation are structured around the expectations, style, sequencing, and demands of the Edexcel 4MA1 specification and examination papers. The programmes are designed to support long-term preparation for final linear examinations through consistent deliberate practice, structured revision, and progressive mathematical development over time.",
-      },
-      {
-        question: "How are lessons delivered?",
-        answer:
-          "Lessons are delivered fully online through structured live teaching sessions combined with guided independent practice, Google Classroom resources, written mathematical working, and ongoing feedback cycles. Students participate in weekly live sessions designed around explanation, modelling, deliberate practice, exam technique, and mathematical reasoning.",
-      },
-      {
-        question: "Are lessons live or pre-recorded?",
-        answer:
-          "Students receive short pre-teaching videos before live lessons to introduce key concepts, methods, and vocabulary in advance. These structured preparation materials help students arrive better prepared for deeper mathematical discussion and problem-solving during live sessions. Live lessons themselves are delivered online by an experienced qualified Mathematics teacher and focus on guided instruction, exam technique, reasoning, deliberate practice, and interactive worked examples.",
-      },
-      {
-        question: "What happens if a student misses a lesson?",
-        answer:
-          "Students remain responsible for engaging with lesson materials, practice tasks, and preparation resources provided through Google Classroom. Where appropriate, students may review shared resources, complete independent practice, and use office hour support to address gaps in understanding and maintain progress within the programme sequence.",
-      },
-      {
-        question: "How much independent study is expected?",
-        answer:
-          "Consistent independent practice is an important part of long-term mathematical improvement. Students are expected to complete structured exam-style practice, revisit prior learning regularly, review feedback carefully, and engage with preparation materials between live sessions. Weekly routines and deliberate practice play a significant role in long-term progress and confidence development.",
-      },
-      {
-        question: "How does AI-assisted feedback work?",
-        answer:
-          "AI-assisted feedback systems are used to support analysis of mathematical working, identify misconceptions, highlight inefficient methods, and improve written mathematical communication. AI tools are used to support, not replace, teacher guidance and structured feedback processes.",
-      },
-      {
-        question: "Are students expected to submit written mathematical working?",
-        answer:
-          "Yes. Students are expected to upload written mathematical working regularly through Google Classroom. Reviewing written solutions allows deeper analysis of reasoning, working structure, notation, communication, and exam-method accuracy beyond final answers alone.",
-      },
-      {
-        question: "How are weaker topic areas identified?",
-        answer:
-          "Weaker areas are identified through structured exam practice, retrieval activities, lesson participation, written mathematical working, and ongoing feedback analysis. Weekly independent practice is completed through Dr Frost Maths, which provides students with immediate automated feedback while also generating Question Level Analysis (QLA) data to help #WeReallyDoMaths identify weaker topic areas, misconceptions, and patterns in student performance over time. Written mathematical working submitted through Google Classroom also helps identify more nuanced weaknesses beyond topic-specific performance alone, including gaps in reasoning, mathematical communication, working structure, notation accuracy, method selection, and exam technique. This allows students to focus deliberate practice more effectively and revisit topics requiring further reinforcement over time.",
-      },
-      {
-        question: "What technology is required?",
-        answer:
-          "Students require a stable internet connection, a device suitable for live online lessons, access to Google Classroom, a dedicated mathematics notebook or organised folder for storing lesson notes, worked examples, retrieval practice, feedback, and programme resources, writing materials for regular mathematical working, and the ability to upload scanned or photographed written mathematical working. A scientific calculator appropriate for Higher Tier Edexcel IGCSE Mathematics is also recommended.",
-      },
-    ].map((faq, index) => (
-      <div
-        key={index}
-        className="rounded-[2rem] border border-yellow-400/15 bg-black/70 p-8 backdrop-blur-md"
-      >
-        <h3 className="text-2xl font-bold text-white">
-          {faq.question}
-        </h3>
-
-        <p className="mt-5 leading-8 text-slate-300">
-          {faq.answer}
-        </p>
-      </div>
-    ))}
-  </div>
-</section> 
-<section id="parents" className="relative z-10 mx-auto max-w-7xl px-6 pb-32">
-  <div className="mx-auto max-w-4xl text-center">
-    <p className="text-sm font-semibold uppercase tracking-[0.25em] text-yellow-400">
-      FOR PARENTS
-    </p>
-
-    <h2 className="mt-4 text-4xl font-bold md:text-6xl">
-      Structured Support For Long-Term Mathematical Development
-    </h2>
-
-    <p className="mt-8 text-lg leading-8 text-slate-300 md:text-xl">
-      #WeReallyDoMaths is designed around the belief that long-term
-      mathematical progress is built through consistency, deliberate
-      practice, structured feedback, and sustained routines over time.
-    </p>
-  </div>
-
-  <div className="mt-20 grid gap-6 md:grid-cols-2">
-    {[
-      {
-        title: "Consistent Weekly Structure",
-        text: "Students engage with a structured weekly cycle of preparation, live instruction, independent practice, feedback, and reflection designed to support long-term mathematical progress and stronger examination performance over time.",
-      },
-      {
-        title: "Deliberate Practice And Accountability",
-        text: "Students are expected to complete regular independent mathematical practice between sessions. Weekly routines and consistent engagement play an important role in developing fluency, confidence, reasoning, and long-term retention.",
-      },
-      {
-        title: "Progress Monitoring",
-        text: "Student performance is monitored through structured exam practice, retrieval activities, Question Level Analysis (QLA), written mathematical working, and ongoing feedback processes to help identify strengths, misconceptions, and areas requiring further reinforcement.",
-      },
-      {
-        title: "Mathematical Communication And Reasoning",
-        text: "The programme focuses not only on final answers, but also on mathematical reasoning, written communication, method selection, notation accuracy, and the ability to explain mathematical thinking clearly under exam conditions.",
-      },
-      {
-        title: "Preparation Before Live Lessons",
-        text: "Students receive short pre-teaching videos before live sessions to introduce key concepts and methods in advance. This allows live lesson time to focus more deeply on reasoning, guided practice, discussion, and exam-style application.",
-      },
-      {
-        title: "A Calm And Academically Serious Environment",
-        text: "The programmes are designed to create a focused, structured, and academically serious learning environment where students are encouraged to develop independence, resilience, consistency, and confidence through sustained mathematical effort over time.",
-      },
-    ].map((item, index) => (
-      <div
-        key={index}
-        className="rounded-[2rem] border border-yellow-400/15 bg-black/70 p-8 backdrop-blur-md"
-      >
-        <h3 className="text-2xl font-bold text-white">
-          {item.title}
-        </h3>
-
-        <p className="mt-5 leading-8 text-slate-300">
-          {item.text}
-        </p>
-      </div>
-    ))}
-  </div>
-
-  <div className="mt-14 rounded-[2rem] border border-yellow-400/20 bg-black/75 p-10 text-center backdrop-blur-md">
-    <p className="mx-auto max-w-5xl text-xl leading-9 text-slate-300 md:text-2xl">
-      Strong mathematical confidence is usually developed through preparation,
-      deliberate practice, meaningful feedback, and consistent routines over
-      time.
-    </p>
-  </div>
-</section>
-      <section id="programmes" className="relative z-10 mx-auto max-w-7xl px-6 pb-32">
-        <div className="mb-14 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-yellow-400">
-            PROGRAMME PATHWAYS
-          </p>
-
-          <h2 className="mt-4 text-4xl font-bold md:text-6xl">
-            Choose Your Higher Tier Pathway
-          </h2>
-        </div>
-
-        <div className="grid gap-8 md:grid-cols-2">
-          <div className="rounded-[2rem] border border-yellow-400/20 bg-black/80 p-10 backdrop-blur-md">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-yellow-400">
-              Accelerated Pathway
-            </p>
-
-            <h3 className="mt-4 text-3xl font-bold">
-              1-Year Higher Tier Mastery Programme
-            </h3>
-
-            <p className="mt-6 text-lg leading-8 text-slate-300">
-              Designed for advanced Year 10 students and Year 11 students
-              preparing for Edexcel IGCSE Mathematics through structured online
-              live lessons, guided exam practice, and accelerated Higher Tier
-              mastery.
-            </p>
-
-            <div className="mt-10 space-y-4">
-              <div className="rounded-2xl border border-yellow-400/20 bg-black/50 p-5">
-                <p className="text-sm uppercase tracking-[0.2em] text-yellow-400">
-                  Live Online Lessons
-                </p>
-                <div className="mt-4 space-y-2 text-slate-300">
-                  <p>Saturday — 10:00 AM to 11:30 AM</p>
-                  <p>Sunday — 10:00 AM to 11:30 AM</p>
+        <section id="courses" className="wrdm-section wrdm-container" aria-labelledby="courses-title">
+          <div className="wrdm-section-heading">
+            <p className="wrdm-eyebrow">Our First Four Courses</p>
+            <h2 id="courses-title">Four Courses. A Clear Focus.</h2>
+          </div>
+          <div className="wrdm-course-grid">
+            {courses.map((course) => (
+              <article className="wrdm-course" key={course.id} aria-labelledby={course.id}>
+                <p className="wrdm-eyebrow">{course.label}</p>
+                <h3 id={course.id}>{course.title}</h3>
+                {course.subtitle && <p className="wrdm-course-subtitle">{course.subtitle}</p>}
+                <p className="wrdm-course-board">{course.board}</p>
+                <p className="wrdm-course-audience">{course.audience}</p>
+                <p className="wrdm-course-description">{course.description}</p>
+                <ul>{course.focus.map((item) => <li key={item}>{item}</li>)}</ul>
+                <details className="wrdm-outline">
+                  <summary>View the eight-week course outline<span className="wrdm-sr-only"> for {course.title}</span></summary>
+                  <ol>
+                    {course.outline.map(([title, description], index) => (
+                      <li key={title}>
+                        <span className="wrdm-week-label">Week {index + 1}</span>
+                        <div><h4>{title}</h4><p>{description}</p></div>
+                      </li>
+                    ))}
+                  </ol>
+                  <p className="wrdm-outline-test">After the final teaching session: an end-of-course test, feedback and recommended next steps.</p>
+                </details>
+                <details className="wrdm-timetable">
+                  <summary>View lesson and drop-in times<span className="wrdm-sr-only"> for {course.title}</span></summary>
+                  <dl>
+                    <div><dt>Saturday lesson</dt><dd>{course.saturday}</dd></div>
+                    <div><dt>Sunday lesson</dt><dd>Time to be confirmed</dd></div>
+                    <div><dt>Optional drop-in</dt><dd>{course.office}</dd></div>
+                  </dl>
+                  <p>All times are Dubai time. Paid-course start date to be confirmed.</p>
+                </details>
+                <div className="wrdm-course-bottom">
+                  <p className="wrdm-course-duration">Eight weeks · Two live lessons each week<br />End-of-course test and feedback</p>
+                  <a href={FORM_LINK} target="_blank" rel="noopener noreferrer" className="wrdm-button wrdm-primary"
+                    aria-label={`Register your interest in ${course.title}`}>Register Your Interest</a>
                 </div>
+              </article>
+            ))}
+          </div>
+          <aside className="wrdm-follow-on" aria-labelledby="follow-on-title">
+            <h3 id="follow-on-title">What comes next?</h3>
+            <p>Follow-on courses will be shaped by the needs of the students who join our first intake. We will use lesson observations, practice tasks, student feedback and end-of-course assessments to identify where further teaching would be most valuable.</p>
+            <p>Each follow-on course will have a clear outline shared before enrolment, so families know what to expect.</p>
+          </aside>
+        </section>
+
+        <section id="how" className="wrdm-section wrdm-container" aria-labelledby="how-title">
+          <div className="wrdm-section-heading">
+            <p className="wrdm-eyebrow">How It Works</p>
+            <h2 id="how-title">A Clear Weekly Rhythm.</h2>
+          </div>
+          <div className="wrdm-steps">
+            {steps.map((step, index) => (
+              <div className="wrdm-step" key={step.title}>
+                <span className="wrdm-step-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
               </div>
+            ))}
+          </div>
+          <p className="wrdm-assessment-note"><strong>Measure your progress.</strong> A short diagnostic helps identify your starting point. After the final teaching session, complete an end-of-course test and receive feedback on your strengths, areas for improvement and next steps.</p>
+        </section>
 
-              <div className="rounded-2xl border border-yellow-400/20 bg-black/50 p-5">
-                <p className="text-sm uppercase tracking-[0.2em] text-yellow-400">
-                  Online Office Hours
-                </p>
-                <p className="mt-4 text-slate-300">
-                  Wednesday — 6:00 PM to 7:30 PM
-                </p>
+        <section id="teacher" className="wrdm-section wrdm-container" aria-labelledby="teacher-title">
+          <div className="wrdm-teacher-panel">
+            <div className="wrdm-portrait">
+              <Image src="/founder.png" alt="Seymour Williams, founder of We Really Do Maths"
+                width={1200} height={1400} sizes="(max-width: 639px) 280px, (max-width: 899px) 220px, 300px" />
+            </div>
+            <div className="wrdm-teacher-copy">
+              <p className="wrdm-eyebrow">Meet Your Teacher</p>
+              <h2 id="teacher-title">Seymour Williams</h2>
+              <p className="wrdm-teacher-role">Founder of #WeReallyDoMaths</p>
+              <p className="wrdm-teacher-bio">An experienced mathematics teacher with over ten years of teaching experience across the United Kingdom and Dubai, and two master’s degrees in Mathematics.</p>
+              <p className="wrdm-teacher-bio">My teaching combines clear modelling, purposeful practice and feedback that helps students understand where they went wrong and what to do next.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="faq" className="wrdm-section wrdm-container" aria-labelledby="faq-title">
+          <div className="wrdm-faq-layout">
+            <div className="wrdm-section-heading">
+              <h2 id="faq-title">Frequently Asked Questions</h2>
+            </div>
+            <div className="wrdm-faq-list">
+              {questions.map((item) => (
+                <details key={item.question}>
+                  <summary>{item.question}</summary>
+                  <p>{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="register" className="wrdm-section wrdm-container" aria-labelledby="register-title">
+          <div className="wrdm-register-panel">
+            <p className="wrdm-eyebrow">Register Your Interest</p>
+            <h2 id="register-title">Choose Your Next Step in Maths.</h2>
+            <p>Join our free introduction week from 1 November 2026. Tell us your year group, examination board, current attainment and preferred course. We will share paid-course dates, fees and next steps before enrolment.</p>
+            <a href={FORM_LINK} target="_blank" rel="noopener noreferrer" className="wrdm-button wrdm-primary">Register Your Interest</a>
+          </div>
+        </section>
+      </main>
+
+      <footer className="wrdm-footer">
+        <div className="wrdm-container">
+          <div className="wrdm-footer-top">
+            <div>
+              <a href="#top" className="wrdm-brand">#WeReallyDoMaths</a>
+              <p className="wrdm-footer-description">Focused online courses for GCSE and IGCSE Mathematics.</p>
+            </div>
+            <div>
+              <a href="mailto:admin@wereallydomaths.info" className="wrdm-footer-contact">Contact: admin@wereallydomaths.info</a>
+              <div className="wrdm-footer-links">
+                <a href="https://www.instagram.com/wereallydomaths.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+                <a href="https://www.tiktok.com/@wereallydomaths.com" target="_blank" rel="noopener noreferrer">TikTok</a>
               </div>
-              <a
-  href={FORM_LINK}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-yellow-400 px-6 py-4 text-center font-semibold text-black transition hover:bg-yellow-300"
->
-  Apply For The 1-Year Pathway
-</a>
             </div>
           </div>
-
-          <div className="rounded-[2rem] border border-yellow-400/30 bg-black/80 p-10 backdrop-blur-md">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-yellow-400">
-              Structured Pathway
-            </p>
-
-            <h3 className="mt-4 text-3xl font-bold">
-              2-Year Higher Tier Mastery Programme
-            </h3>
-
-            <p className="mt-6 text-lg leading-8 text-slate-300">
-              Designed for Year 10 students who benefit from slower pacing,
-              deeper reinforcement, and long-term Higher Tier mastery through
-              structured online live lessons and guided mathematical development.
-            </p>
-
-            <div className="mt-10 space-y-4">
-              <div className="rounded-2xl border border-yellow-400/20 bg-black/50 p-5">
-                <p className="text-sm uppercase tracking-[0.2em] text-yellow-400">
-                  Live Online Lessons
-                </p>
-                <div className="mt-4 space-y-2 text-slate-300">
-                  <p>Saturday — 12:30 PM to 2:00 PM</p>
-                  <p>Sunday — 12:30 PM to 2:00 PM</p>
-                </div>
-              </div>
-
-              <div className="rounded-2xl border border-yellow-400/20 bg-black/50 p-5">
-                <p className="text-sm uppercase tracking-[0.2em] text-yellow-400">
-                  Online Office Hours
-                </p>
-                <p className="mt-4 text-slate-300">
-                  Thursday — 6:00 PM to 7:00 PM
-                </p>
-              </div>
-            </div>
-            <a
-  href={FORM_LINK}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-yellow-400 px-6 py-4 text-center font-semibold text-black transition hover:bg-yellow-300"
->
-  Apply For The 2-Year Pathway
-</a>
-          </div>
-        </div>
-      </section>
-
-      <section id="apply" className="relative z-10 mx-auto max-w-7xl px-6 pb-32">
-        <div className="rounded-[2.5rem] border border-yellow-400/20 bg-black/80 p-12 text-center backdrop-blur-md">
-          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-yellow-400">
-            ENROLMENT
-          </p>
-
-          <h2 className="mt-4 text-4xl font-bold md:text-6xl">
-            Join The 2026–2027 Cohort
-          </h2>
-
-          <p className="mx-auto mt-8 max-w-4xl text-lg leading-8 text-slate-300 md:text-xl">
-            Structured online coaching for Higher Tier Edexcel IGCSE
-            Mathematics built around preparation, deliberate practice,
-            meaningful feedback, and long-term mathematical mastery.
-          </p>
-
-          <div className="mt-12">
-            <a href={FORM_LINK} target="_blank" rel="noopener noreferrer" className="inline-flex max-w-full items-center justify-center rounded-full bg-yellow-400 px-8 py-5 text-center text-base font-semibold leading-tight text-black transition hover:bg-yellow-300 sm:text-lg">
-              Complete Enrolment Interest Form
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <footer className="relative z-10 border-t border-yellow-400/20 bg-black/85">
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 md:grid-cols-3">
-          <div>
-            <p className="text-lg font-bold tracking-wide text-yellow-400">
-              #WeReallyDoMaths
-            </p>
-
-            <p className="mt-4 max-w-sm text-sm leading-7 text-slate-400">
-              Structured online coaching for Higher Tier Edexcel IGCSE
-              Mathematics designed around Mastery Cycles, guided exam practice,
-              live online lessons, and long-term mathematical confidence.
-            </p>
-          </div>
-
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-yellow-400">
-              Navigation
-            </p>
-
-            <div className="mt-6 flex flex-col gap-4 text-sm text-slate-300">
-              <a href="#how" className="transition hover:text-yellow-400">
-                How It Works
-              </a>
-
-              <a href="#programmes" className="transition hover:text-yellow-400">
-                Programmes
-              </a>
-              <a href="/privacy-policy" className="transition hover:text-yellow-400">
-  Privacy Policy
-</a>
-              <a href="/terms-and-conditions" className="transition hover:text-yellow-400">
-  Terms & Conditions
-</a>
-              <a href="/refund-policy" className="transition hover:text-yellow-400">
-  Refund Policy
-</a>
-              <a href={FORM_LINK} target="_blank" rel="noopener noreferrer" className="transition hover:text-yellow-400">
-                Enrolment
-              </a>
-            </div>
-          </div>
-
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-yellow-400">
-              Contact
-            </p>
-
-            <div className="mt-6 flex flex-col gap-4 text-sm text-slate-300">
-              <a href="mailto:admin@wereallydomaths.info" className="transition hover:text-yellow-400">
-                admin@wereallydomaths.info
-              </a>
-
-              <p>Dubai-Based Online Mathematics Academy</p>
-              <p>Edexcel IGCSE Mathematics (Higher Tier)</p>
-              <p>@wereallydomaths.com</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="border-t border-yellow-400/10">
-          <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 text-sm text-slate-500 md:flex-row">
-            <p>© 2026 #WeReallyDoMaths. All rights reserved.</p>
-
-            <div className="flex items-center gap-6">
-              <a href="https://www.instagram.com/wereallydomaths.com" target="_blank" rel="noopener noreferrer" className="transition hover:text-yellow-400">
-                Instagram
-              </a>
-
-              <a href="https://www.tiktok.com/@wereallydomaths.com" target="_blank" rel="noopener noreferrer" className="transition hover:text-yellow-400">
-                TikTok
-              </a>
-            </div>
+          <div className="wrdm-footer-bottom">
+            <p className="wrdm-copyright">© 2026 #WeReallyDoMaths. All rights reserved.</p>
+            <nav className="wrdm-footer-links" aria-label="Policies">
+              <a href="/privacy-policy">Privacy Policy</a>
+              <a href="/terms-and-conditions">Terms and Conditions</a>
+              <a href="/refund-policy">Refund Policy</a>
+            </nav>
           </div>
         </div>
       </footer>
-    </main>
+    </div>
   );
 }
