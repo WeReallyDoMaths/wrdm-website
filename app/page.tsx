@@ -8,65 +8,219 @@ import { InlineMath } from "react-katex";
 const FORM_LINK = "https://forms.gle/fWmZt22ekpWzBmrn7";
 
 const mathItems = [
-  "\\sum",
-  "\\pi",
-  "\\infty",
-  "\\int",
-  "\\lambda",
-  "\\sqrt{x+1}",
-  "\\theta",
-  "f(x)",
-  "x^{2}",
-  "\\sin\\theta",
-  "\\cos\\theta",
-  "\\tan\\theta",
-  "\\Delta",
-  "a_{11}",
-  "a_{22}",
-  "A^{-1}",
-  "\\frac{dy}{dx}",
-  "\\lim_{x\\to\\infty}",
-  "e^{i\\pi}",
-  "\\pi r^{2}",
-  "\\int_a^b f(x)\\,dx",
-  "\\sqrt{x^{2}+1}",
-  "\\frac{-b\\pm\\sqrt{b^{2}-4ac}}{2a}",
-  "\\sum_{n=1}^{\\infty}",
+  // IGCSE algebra, geometry, trigonometry and probability.
+  "x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}",
+  "a^2+b^2=c^2",
+  "y=mx+c",
+  "(a+b)^2=a^2+2ab+b^2",
+  "a^m a^n=a^{m+n}",
+  "u_n=a+(n-1)d",
+  "S_n=\\frac{n}{2}[2a+(n-1)d]",
+  "\\frac{a}{\\sin A}=\\frac{b}{\\sin B}",
+  "a^2=b^2+c^2-2bc\\cos A",
+  "A=\\frac12 ab\\sin C",
+  "C=2\\pi r",
+  "A=\\pi r^2",
+  "V=\\frac43\\pi r^3",
+  "P(A')=1-P(A)",
+  "f^{-1}(f(x))=x",
+  // International A Level pure mathematics, statistics and mechanics.
+  "\\sin^2\\theta+\\cos^2\\theta=1",
+  "\\sin 2\\theta=2\\sin\\theta\\cos\\theta",
+  "\\cos 2\\theta=1-2\\sin^2\\theta",
+  "\\frac{d}{dx}(x^n)=nx^{n-1}",
+  "\\int x^n\\,dx=\\frac{x^{n+1}}{n+1}+C\\quad(n\\ne-1)",
+  "\\frac{d}{dx}(e^x)=e^x",
+  "\\frac{d}{dx}(\\ln x)=\\frac1x",
+  "\\int\\cos x\\,dx=\\sin x+C",
+  "\\log_a(xy)=\\log_a x+\\log_a y",
+  "S_n=\\frac{a(1-r^n)}{1-r}\\quad(r\\ne1)",
+  "\\mathbf r=\\mathbf a+t\\mathbf b",
+  "P(A\\mid B)=\\frac{P(A\\cap B)}{P(B)}",
+  "X\\sim\\mathrm{B}(n,p)",
+  "P(X=k)=\\binom nk p^k(1-p)^{n-k}",
+  "X\\sim\\mathrm{N}(\\mu,\\sigma^2)",
+  "Z=\\frac{X-\\mu}{\\sigma}",
+  "v=u+at",
+  "s=ut+\\frac12at^2",
+  "v^2=u^2+2as",
+  "F=ma",
+  "E_k=\\frac12mv^2",
 ];
+type MathParticle = {
+  index: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  vx: number;
+  vy: number;
+};
+
+function containMathParticle(p: MathParticle, width: number, height: number) {
+  const maxX = Math.max(0, width - p.width);
+  const maxY = Math.max(0, height - p.height);
+  if (p.x < 0) { p.x = 0; p.vx = Math.abs(p.vx); }
+  if (p.x > maxX) { p.x = maxX; p.vx = -Math.abs(p.vx); }
+  if (p.y < 0) { p.y = 0; p.vy = Math.abs(p.vy); }
+  if (p.y > maxY) { p.y = maxY; p.vy = -Math.abs(p.vy); }
+}
+
+function advanceMathParticles(particles: MathParticle[], width: number, height: number, dt: number) {
+  for (const p of particles) {
+    p.x += p.vx * dt;
+    p.y += p.vy * dt;
+    containMathParticle(p, width, height);
+  }
+  // Resolve the padded rectangles, including tall fractions and wide formulae.
+  for (let pass = 0; pass < 4; pass++) {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const a = particles[i];
+        const b = particles[j];
+        const dx = b.x + b.width / 2 - a.x - a.width / 2;
+        const dy = b.y + b.height / 2 - a.y - a.height / 2;
+        const overlapX = (a.width + b.width) / 2 - Math.abs(dx);
+        const overlapY = (a.height + b.height) / 2 - Math.abs(dy);
+        if (overlapX <= 0 || overlapY <= 0) continue;
+        if (overlapX < overlapY) {
+          const direction = dx >= 0 ? 1 : -1;
+          a.x -= direction * (overlapX + 0.1) / 2;
+          b.x += direction * (overlapX + 0.1) / 2;
+          if ((a.vx - b.vx) * direction > 0) {
+            [a.vx, b.vx] = [b.vx, a.vx];
+          }
+        } else {
+          const direction = dy >= 0 ? 1 : -1;
+          a.y -= direction * (overlapY + 0.1) / 2;
+          b.y += direction * (overlapY + 0.1) / 2;
+          if ((a.vy - b.vy) * direction > 0) {
+            [a.vy, b.vy] = [b.vy, a.vy];
+          }
+        }
+        containMathParticle(a, width, height);
+        containMathParticle(b, width, height);
+      }
+    }
+  }
+}
 
 function MathWatermark() {
+  const backgroundRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const background = backgroundRef.current;
+    if (!background) return;
+    const elements = Array.from(background.querySelectorAll<HTMLElement>(".wrdm-floating-symbol"));
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let particles: MathParticle[] = [];
+    let frame = 0;
+    let lastTime = 0;
+    let disposed = false;
+    let viewportWidth = 0;
+    let viewportHeight = 0;
+
+    function paint() {
+      for (const p of particles) {
+        elements[p.index].style.transform = `translate3d(${p.x}px, ${p.y}px, 0)`;
+        elements[p.index].style.visibility = "visible";
+      }
+    }
+
+    function tick(time: number) {
+      const dt = lastTime ? Math.min((time - lastTime) / 1000, 0.032) : 0;
+      lastTime = time;
+      advanceMathParticles(particles, viewportWidth, viewportHeight, dt);
+      paint();
+      frame = requestAnimationFrame(tick);
+    }
+
+    function initialise() {
+      if (disposed || !background) return;
+      cancelAnimationFrame(frame);
+      lastTime = 0;
+      viewportWidth = background.clientWidth;
+      viewportHeight = background.clientHeight;
+      particles = [];
+      for (const element of elements) element.style.visibility = "hidden";
+      // Use fewer formulae on smaller screens and never start them overlapping.
+      const count = viewportWidth < 600 ? 6 : viewportWidth < 900 ? 10 : 18;
+      let seed = 12345;
+      function random() {
+        seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+        return seed / 4294967296;
+      }
+      for (let i = 0; i < count; i++) {
+        const index = (i * 7) % elements.length;
+        const box = elements[index].getBoundingClientRect();
+        if (box.width >= viewportWidth || box.height >= viewportHeight) continue;
+        for (let attempt = 0; attempt < 200; attempt++) {
+          const x = random() * (viewportWidth - box.width);
+          const y = random() * (viewportHeight - box.height);
+          const intersects = particles.some(p =>
+            x < p.x + p.width + 8 && x + box.width + 8 > p.x &&
+            y < p.y + p.height + 8 && y + box.height + 8 > p.y
+          );
+          if (intersects) continue;
+          const angle = random() * Math.PI * 2;
+          const speed = 16 + random() * 14;
+          particles.push({ index, x, y, width: box.width, height: box.height,
+            vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed });
+          break;
+        }
+      }
+      paint();
+      if (!motion.matches) frame = requestAnimationFrame(tick);
+    }
+
+    const observer = new ResizeObserver(initialise);
+    observer.observe(background);
+    motion.addEventListener("change", initialise);
+    initialise();
+    // Measure again once the mathematical fonts have loaded.
+    void document.fonts.ready.then(initialise);
+    document.fonts.addEventListener("loadingdone", initialise);
+    return () => {
+      disposed = true;
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      motion.removeEventListener("change", initialise);
+      document.fonts.removeEventListener("loadingdone", initialise);
+    };
+  }, []);
+
   return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#FDFCF9]">
-      <div className="absolute inset-0 bg-[#FDFCF9]" />
-      <div className="absolute left-1/2 top-1/2 h-[850px] w-[850px] -translate-x-1/2 -translate-y-1/2 rounded-full border" style={{ borderColor: "rgba(222, 214, 194, 0.12)" }} />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#FDFCF9_84%)]" />
-
-      <div className="absolute inset-0 z-10" style={{ opacity: 0.22 }}>
-        {Array.from({ length: 24 }).map((_, col) => (
-          <div
-            key={col}
-            className="absolute top-[-10%] flex flex-col gap-12"
-            style={{
-              left: `${col * 4.5}%`,
-              transform: `translateY(${col % 2 === 0 ? "0px" : "50px"})`,
-              fontSize: "0.78rem",
-              color: "#DED6C2",
-            }}
-          >
-            {Array.from({ length: 28 }).map((_, i) => (
-              <div key={i} className="whitespace-nowrap">
-                <InlineMath math={mathItems[(i + col) % mathItems.length]} />
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
-
-      <div className="absolute inset-0 z-20 bg-[#FDFCF9]/20" />
+    <div ref={backgroundRef} aria-hidden="true" className="wrdm-math-background">
+      {mathItems.map((math, index) => (
+        <div key={index} className="wrdm-floating-symbol">
+          <InlineMath math={math} />
+        </div>
+      ))}
+      <style jsx global>{`
+        .wrdm-math-background {
+          position: fixed;
+          inset: 0;
+          z-index: 0;
+          overflow: hidden;
+          pointer-events: none;
+          background: #fdfcf9;
+        }
+        .wrdm-floating-symbol {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: max-content;
+          padding: 10px;
+          color: #b5a47a;
+          opacity: .24;
+          visibility: hidden;
+          white-space: nowrap;
+          font-size: clamp(.65rem, 1vw, .95rem);
+        }
+      `}</style>
     </div>
   );
 }
-
 const navigation = [
   ["Courses", "#courses"],
   ["Free Introduction", "#free-week"],
@@ -445,6 +599,11 @@ export default function Home() {
         .wrdm-site .wrdm-secondary { background: rgba(255,255,255,.94); border-color: #d8dce2; color: var(--navy); }
         .wrdm-site .wrdm-secondary:hover { border-color: var(--gold); background: #fff; }
         .wrdm-site .wrdm-header-actions { display: flex; align-items: center; gap: .65rem; }
+        .wrdm-site .wrdm-brand-with-logo { display: inline-flex; align-items: center; gap: .65rem; flex-shrink: 0; }
+        .wrdm-site .wrdm-brand-with-logo img { display: block; width: 56px; height: auto; border-radius: 50%; }
+        @media (max-width: 1279px) {
+          .wrdm-site .wrdm-brand-with-logo img { width: 48px; }
+        }
         .wrdm-site .wrdm-header-actions .wrdm-button { padding-inline: 1rem; font-size: .82rem; }
         .wrdm-site .wrdm-resources-menu { position: relative; }
         .wrdm-site .wrdm-resources-menu summary { cursor: pointer; list-style: none; gap: .6rem; }
@@ -621,7 +780,10 @@ export default function Home() {
 
       <header className="wrdm-header">
         <div className="wrdm-container wrdm-header-row">
-          <a href="#top" className="wrdm-brand" aria-label="We Really Do Maths home" onClick={() => setMobileMenuOpen(false)}>#WRDM</a>
+          <a href="#top" className="wrdm-brand wrdm-brand-with-logo" aria-label="We Really Do Maths home" onClick={() => setMobileMenuOpen(false)}>
+            <Image src="/wrdm-logo.png" alt="" width={837} height={817} sizes="(max-width: 1279px) 48px, 56px" />
+            <span>#WRDM</span>
+          </a>
           <nav className="wrdm-desktop-nav" aria-label="Main navigation">
             {navigation.map(([label, href]) => <a key={href} href={href}>{label}</a>)}
           </nav>
@@ -826,3 +988,12 @@ export default function Home() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
