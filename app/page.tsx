@@ -5,7 +5,8 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { InlineMath } from "react-katex";
 
-const FORM_LINK = "https://forms.gle/fWmZt22ekpWzBmrn7";
+
+
 
 const mathItems = [
   // IGCSE algebra, geometry, trigonometry and probability.
@@ -631,6 +632,62 @@ export default function Home() {
           display: block; padding: 8rem 0 3rem;
         }
         .wrdm-site .wrdm-hero-copy { min-width: 0; }
+        .wrdm-site .wrdm-hero-intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; gap: clamp(2rem, 4vw, 3.5rem); margin-top: 1.5rem; }
+        .wrdm-site .wrdm-hero-intro .wrdm-hero-tagline { margin-top: 0; font-weight: 600; }
+        .wrdm-site .wrdm-key-dates { padding: .1rem .3rem .5rem; min-width: 0; }
+        .wrdm-site .wrdm-key-dates h2 { font-size: 1rem; font-weight: 600; }
+        .wrdm-site .wrdm-dates-caption { margin-top: .2rem; font-size: .77rem; color: var(--muted); }
+        .wrdm-site .wrdm-date-notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; gap: .85rem; margin-top: 1rem; }
+        .wrdm-site .wrdm-date-note { position: relative; min-width: 0; padding: .85rem 1rem; background: #f4e9ca; border: 1px solid rgba(146,112,32,.15); border-radius: .5rem; box-shadow: 2px 4px 10px rgba(23,35,56,.06); transform: rotate(-.7deg); }
+        .wrdm-site .wrdm-date-note::before { content: ''; position: absolute; top: -.3rem; left: calc(50% - 1rem); width: 2rem; height: .6rem; background: rgba(222,214,194,.8); border-radius: .1rem; transform: rotate(4deg); }
+        .wrdm-site .wrdm-date-note:nth-child(2) { background: #f7efd9; transform: rotate(.7deg); }
+        .wrdm-site .wrdm-date-note:nth-child(3) { grid-column: 1 / -1; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 1.1rem; align-items: center; background: #eee4cb; transform: rotate(-.25deg); padding-block: .7rem; }
+        .wrdm-site .wrdm-note-date { display: block; font-size: 1.08rem; font-weight: 700; color: var(--gold); line-height: 1.35; }
+        .wrdm-site .wrdm-note-label { margin-top: .4rem; font-size: .68rem; color: var(--muted); font-weight: 600; }
+        .wrdm-site .wrdm-date-note h3 { margin-top: .2rem; font-size: .83rem; font-weight: 600; line-height: 1.4; }
+        .wrdm-site .wrdm-note-time { margin-top: .4rem; font-size: .72rem; color: var(--muted); line-height: 1.5; }
+        .wrdm-site .wrdm-date-note {
+          transform-origin: 50% 0%;
+          animation: wrdm-note-breeze 7.6s ease-in-out infinite;
+          animation-delay: -2.1s;
+          --note-tilt: -2deg;
+        }
+        .wrdm-site .wrdm-date-note:nth-child(2) {
+          --note-tilt: 2deg;
+          animation-duration: 8.9s;
+          animation-delay: -5.4s;
+        }
+        .wrdm-site .wrdm-date-note:nth-child(3) {
+          --note-tilt: -1deg;
+          animation-duration: 10.2s;
+          animation-delay: -3.7s;
+        }
+        @keyframes wrdm-note-breeze {
+          0%, 100% { transform: rotate(var(--note-tilt)) translateY(0); }
+          24% { transform: rotate(calc(var(--note-tilt) + .8deg)) translateY(-1px); }
+          43% { transform: rotate(calc(var(--note-tilt) - .4deg)) translateY(0); }
+          66% { transform: rotate(calc(var(--note-tilt) + 1.1deg)) translateY(-2px); }
+          82% { transform: rotate(calc(var(--note-tilt) - .6deg)) translateY(-.5px); }
+        }
+        @media (hover: hover) {
+          .wrdm-site .wrdm-date-note:hover { animation-play-state: paused; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .wrdm-site .wrdm-date-note { animation: none !important; transform: rotate(var(--note-tilt)); }
+        }
+        .wrdm-site .wrdm-date-note:nth-child(3) h3 { margin-top: 0; }
+        .wrdm-site .wrdm-date-note:nth-child(3) .wrdm-note-time { margin-top: .15rem; }
+        @media (max-width: 899px) {
+          .wrdm-site .wrdm-hero-intro { grid-template-columns: 1fr; gap: 1.75rem; }
+          .wrdm-site .wrdm-key-dates { max-width: 620px; width: 100%; }
+        }
+        @media (max-width: 639px) {
+          .wrdm-site .wrdm-date-notes { grid-template-columns: 1fr; gap: .9rem; }
+          .wrdm-site .wrdm-date-note:nth-child(3) { display: block; }
+          .wrdm-site .wrdm-date-note:nth-child(3) h3 { margin-top: .4rem; }
+          .wrdm-site .wrdm-date-note h3 { font-size: .9rem; }
+          .wrdm-site .wrdm-note-time { font-size: .8rem; }
+        }
         .wrdm-site .wrdm-hero-copy > .wrdm-eyebrow { display: flex; align-items: center; gap: 1rem; }
         .wrdm-site .wrdm-hero-copy > .wrdm-eyebrow::before { content: ""; width: 2.5rem; height: 1px; background: var(--gold); }
         .wrdm-site h1 {
@@ -691,6 +748,14 @@ export default function Home() {
         .wrdm-site .wrdm-faq-list details p { padding: 0 .25rem 1.5rem; font-size: .95rem; color: var(--muted); line-height: 1.9; }
         .wrdm-site .wrdm-register-panel { padding: 3.5rem 2rem; text-align: center; background: linear-gradient(135deg,#fff,#f5f2e9); border: 1px solid rgba(146,112,32,.24); border-radius: 1.5rem; }
         .wrdm-site .wrdm-register-panel h2 { margin-top: .9rem; }
+        .wrdm-site .wrdm-form-frame { width: min(100%, 800px); margin: 1.5rem auto 0; overflow: hidden; border-radius: .8rem; background: #fff; }
+        .wrdm-site .wrdm-form-frame iframe { display: block; width: 100%; height: 1850px; border: 0; }
+        .wrdm-site .wrdm-form-help { margin: 1rem 0 0; font-size: .85rem; line-height: 1.7; color: var(--muted); }
+        .wrdm-site .wrdm-form-help a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+        @media (max-width: 639px) {
+          .wrdm-site .wrdm-register-panel { padding-inline: .75rem; }
+          .wrdm-site .wrdm-form-frame iframe { height: 2200px; }
+        }
         .wrdm-site .wrdm-register-panel > p:not(.wrdm-eyebrow) { max-width: 600px; margin: 1.3rem auto 1.7rem; color: var(--muted); line-height: 1.85; }
         .wrdm-site .wrdm-footer { background: rgba(255,255,255,.97); border-top: 1px solid rgba(146,112,32,.2); padding: 2.5rem 0 1.5rem; }
         .wrdm-site .wrdm-footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; }
@@ -730,7 +795,7 @@ export default function Home() {
           .wrdm-site .wrdm-step p { max-width: none; }
           .wrdm-site .wrdm-teacher-panel { grid-template-columns: 1fr; gap: 1.8rem; padding: 1.5rem; }
           .wrdm-site .wrdm-portrait { width: min(100%,280px); }
-          .wrdm-site .wrdm-register-panel { padding: 2.5rem 1.5rem; }
+          .wrdm-site .wrdm-register-panel { padding: 2.5rem .75rem; }
           .wrdm-site .wrdm-footer-top, .wrdm-site .wrdm-footer-bottom { flex-direction: column; }
         }
 
@@ -789,7 +854,7 @@ export default function Home() {
           </nav>
           <div className="wrdm-header-actions">
             <FreeResourcesMenu />
-            <a href={FORM_LINK} target="_blank" rel="noopener noreferrer" className="wrdm-button wrdm-primary wrdm-header-apply">Register Your Interest</a>
+            <a href="/register" className="wrdm-button wrdm-primary wrdm-header-apply">Register Your Interest</a>
           </div>
           <button type="button" className="wrdm-button wrdm-secondary wrdm-menu-toggle"
             aria-expanded={mobileMenuOpen} aria-controls="wrdm-mobile-menu"
@@ -811,7 +876,7 @@ export default function Home() {
                 <a key={href} href={href} onClick={() => setMobileMenuOpen(false)}>{label}</a>
               ))}
               <FreeResourcesMenu mobile />
-              <a href={FORM_LINK} target="_blank" rel="noopener noreferrer"
+              <a href="/register"
                 className="wrdm-button wrdm-primary" onClick={() => setMobileMenuOpen(false)}>Register Your Interest</a>
             </div>
           </nav>
@@ -824,11 +889,35 @@ export default function Home() {
           <p className="wrdm-eyebrow">Our First Course Launch</p>
           <h1 id="hero-title">Eight-Week GCSE &amp; IGCSE Maths Courses</h1>
           <p className="wrdm-launch-date"><strong>Free introduction week begins</strong><time dateTime="2026-11-01">1 November 2026</time></p>
-          <p className="wrdm-hero-tagline">Focused teaching. Purposeful practice. Clear goals.</p>
-          <p className="wrdm-hero-description">Our first four focused courses support Edexcel IGCSE and AQA or Edexcel GCSE Higher students. Build Year 10 algebra foundations or work towards Grades 7, 8 and 9, with one clear focus each week.</p>
-          <div className="wrdm-actions">
-            <a href="#courses" className="wrdm-button wrdm-primary">Explore the Courses</a>
-            <a href={FORM_LINK} target="_blank" rel="noopener noreferrer" className="wrdm-button wrdm-secondary">Register Your Interest</a>
+          <div className="wrdm-hero-intro">
+            <div>
+              <p className="wrdm-hero-tagline">Focused teaching. Purposeful practice. Clear goals.</p>
+              <p className="wrdm-hero-description">Our first four focused courses support Edexcel IGCSE and AQA or Edexcel GCSE Higher students. Build Year 10 algebra foundations or work towards Grades 7, 8 and 9, with one clear focus each week.</p>
+              <div className="wrdm-actions">
+                <a href="#courses" className="wrdm-button wrdm-primary">Explore the Courses</a>
+                <a href="/register" className="wrdm-button wrdm-secondary">Register Your Interest</a>
+              </div>
+            </div>
+            <aside className="wrdm-key-dates" aria-labelledby="key-dates-title">
+              <h2 id="key-dates-title">Free Trial Week</h2>
+              <p className="wrdm-dates-caption">November 2026 · All times are Dubai time</p>
+              <div className="wrdm-date-notes">
+                <article className="wrdm-date-note">
+                  <time className="wrdm-note-date" dateTime="2026-11-01">1 November</time>
+                  <p className="wrdm-note-label">Free student lesson 1</p><h3>Repeated percentage change</h3>
+                  <p className="wrdm-note-time">Sunday · 3:00–4:15 pm</p>
+                </article>
+                <article className="wrdm-date-note">
+                  <time className="wrdm-note-date" dateTime="2026-11-05">5 November</time>
+                  <p className="wrdm-note-label">Free student lesson 2</p><h3>Reverse repeated percentage change</h3>
+                  <p className="wrdm-note-time">Thursday · 5:00–6:15 pm</p>
+                </article>
+                <article className="wrdm-date-note">
+                  <time className="wrdm-note-date" dateTime="2026-11-07">7 November</time>
+                  <div><h3>Parent information and Q&amp;A</h3><p className="wrdm-note-time">Saturday · 12:00–1:00 pm</p></div>
+                </article>
+              </div>
+            </aside>
           </div>
           </div>
         </section>
@@ -846,7 +935,7 @@ export default function Home() {
               <article><p className="wrdm-eyebrow">For Parents</p><h3>Course information and questions</h3><p><time dateTime="2026-11-07">Saturday, 7 November 2026</time><br />12:00–1:00 pm</p></article>
             </div>
             <p className="wrdm-intro-note">All times are Dubai time. After the free introduction week, students join separate eight-week paid courses tailored to their chosen pathway and target level.</p>
-            <a href={FORM_LINK} target="_blank" rel="noopener noreferrer" className="wrdm-button wrdm-primary">Register for the Free Introduction Week</a>
+            <a href="/register" className="wrdm-button wrdm-primary">Register for the Free Introduction Week</a>
           </div>
         </section>
 
@@ -888,7 +977,7 @@ export default function Home() {
                 </details>
                 <div className="wrdm-course-bottom">
                   <p className="wrdm-course-duration">Eight weeks · Two live lessons each week<br />End-of-course test and feedback</p>
-                  <a href={FORM_LINK} target="_blank" rel="noopener noreferrer" className="wrdm-button wrdm-primary"
+                  <a href="/register" className="wrdm-button wrdm-primary"
                     aria-label={`Register your interest in ${course.title}`}>Register Your Interest</a>
                 </div>
               </article>
@@ -955,7 +1044,7 @@ export default function Home() {
             <p className="wrdm-eyebrow">Register Your Interest</p>
             <h2 id="register-title">Choose Your Next Step in Maths.</h2>
             <p>Join our free introduction week from 1 November 2026. Tell us your year group, examination board, current attainment and preferred course. We will share paid-course dates, fees and next steps before enrolment.</p>
-            <a href={FORM_LINK} target="_blank" rel="noopener noreferrer" className="wrdm-button wrdm-primary">Register Your Interest</a>
+                        <a href="/register" className="wrdm-button wrdm-primary">Register for the Free Trial Week</a>
           </div>
         </section>
       </main>
@@ -988,6 +1077,12 @@ export default function Home() {
     </div>
   );
 }
+
+
+
+
+
+
 
 
 
