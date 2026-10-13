@@ -24,7 +24,7 @@ export default function RegisterPage() {
           <p className="text-xs font-bold uppercase tracking-widest text-[#927020]">Free Trial Week</p>
           <h1 className="mt-3 text-3xl font-semibold leading-tight sm:text-5xl">Register Your Interest</h1>
           <p className="mt-5 text-base leading-relaxed text-slate-600">Join our free introduction week from 1 November 2026 and explore our GCSE and IGCSE maths courses. Register below to receive joining details and information about your chosen course.</p>
-          <p className="mt-3 text-sm leading-relaxed text-slate-600">All lesson times are Dubai time. There is no obligation to join a paid course. Paid-course dates and fees will be shared before enrolment.</p>
+          <p className="mt-3 text-sm leading-relaxed text-slate-600">The free sessions are on 1 November (3:00–4:15 pm UAE / 11:00 am–12:15 pm UK), 5 November (6:00–7:15 pm UAE / 2:00–3:15 pm UK), and 7 November for parents (2:00–3:00 pm UAE / 10:00–11:00 am UK). UK times are GMT. There is no obligation to join a paid course. Paid-course dates and fees will be shared before enrolment.</p>
         </div>
         <div className="mt-8 overflow-hidden rounded-xl border border-[#DED6C2] bg-white">
           <iframe src={`${FORM_LINK}&embedded=true`} title="We Really Do Maths free trial week registration form" className="block h-[2200px] w-full border-0 sm:h-[1850px]" />
@@ -39,3 +39,4 @@ export default function RegisterPage() {
     </div>
   );
 }
+

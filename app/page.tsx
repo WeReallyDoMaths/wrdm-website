@@ -8,6 +8,9 @@ import { InlineMath } from "react-katex";
 
 
 
+function LessonTimes({ uae, uk }: { uae: string; uk: string }) {
+  return <span className="wrdm-time-pair"><span className="wrdm-time-uae">{uae} UAE</span><span className="wrdm-time-uk">{uk} UK</span></span>;
+}
 const mathItems = [
   // IGCSE algebra, geometry, trigonometry and probability.
   "x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}",
@@ -244,8 +247,8 @@ const courses = [
       "Quadratics, simultaneous equations and inequalities.",
       "Clear reasoning and connected exam problems."
     ],
-    "saturday": "11:30 am–12:45 pm",
-    "office": "Wednesday, 5:30–6:30 pm",
+    "saturday": "11:30 am–12:45 pm", "saturdayUK": "7:30–8:45 am",
+    "office": "Wednesday, 5:30–6:30 pm", "officeUK": "Wednesday, 1:30–2:30 pm",
     "outline": [
       [
         "Expanding and factorising quadratics",
@@ -294,8 +297,8 @@ const courses = [
       "Composite and inverse functions.",
       "Conditional probability and sampling without replacement."
     ],
-    "saturday": "1:00–2:15 pm",
-    "office": "Wednesday, 5:30–6:30 pm",
+    "saturday": "1:00–2:15 pm", "saturdayUK": "9:00–10:15 am",
+    "office": "Wednesday, 5:30–6:30 pm", "officeUK": "Wednesday, 1:30–2:30 pm",
     "outline": [
       [
         "Negative and fractional indices",
@@ -344,8 +347,8 @@ const courses = [
       "Factorising using the highest common factor.",
       "Forming equations and rearranging formulae."
     ],
-    "saturday": "10:00–11:15 am",
-    "office": "Wednesday, 5:30–6:30 pm",
+    "saturday": "10:00–11:15 am", "saturdayUK": "6:00–7:15 am",
+    "office": "Wednesday, 5:30–6:30 pm", "officeUK": "Wednesday, 1:30–2:30 pm",
     "outline": [
       [
         "Expressions and notation",
@@ -394,8 +397,8 @@ const courses = [
       "Standard form, surds and rationalising denominators.",
       "Bounds, accuracy and connected number problems."
     ],
-    "saturday": "2:30–3:45 pm",
-    "office": "Thursday, 6:30–7:30 pm",
+    "saturday": "2:30–3:45 pm", "saturdayUK": "10:30–11:45 am",
+    "office": "Thursday, 6:30–7:30 pm", "officeUK": "Thursday, 2:30–3:30 pm",
     "outline": [
       [
         "Fractions",
@@ -459,11 +462,11 @@ const questions = [
   },
   {
     "question": "Is the introduction week free?",
-    "answer": "Yes. The two shared student lessons on 1 and 5 November 2026 and the parent question-and-answer session on 7 November are free. The student lessons cover mathematical skills that overlap across all four groups. They are followed by separate eight-week paid courses, with outlines shared here. Paid-course start dates, Sunday lesson times and fees will be confirmed before enrolment."
+    "answer": "Yes. The two shared student lessons on 1 and 5 November 2026 and the parent question-and-answer session on 7 November are free. The student lessons cover mathematical skills that overlap across all four groups. They are followed by separate eight-week paid courses, with outlines shared here. Saturday and Sunday lessons run at the same time for each course. Paid-course start dates and fees will be confirmed before enrolment."
   },
   {
     "question": "How are lessons delivered?",
-    "answer": "Lessons are taught live online, with two 75-minute lessons each week: Saturday for teaching and guided practice, and Sunday for deeper problems and feedback. Practice tasks and supporting resources are shared through Google Classroom. All advertised times are Dubai time."
+    "answer": "Lessons are taught live online, with two 75-minute lessons each week: Saturday for teaching and guided practice, and Sunday for deeper problems and feedback. Both lessons run at the same time for each course. Practice tasks and supporting resources are shared through Google Classroom. UAE times appear first, with UK equivalents alongside. UK times depend on the lesson date and whether GMT or British Summer Time applies."
   },
   {
     "question": "What work is expected between lessons?",
@@ -630,6 +633,14 @@ export default function Home() {
         .wrdm-site .wrdm-eyebrow { color: var(--gold); font-size: .7rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
         .wrdm-site .wrdm-hero {
           display: block; padding: 8rem 0 3rem;
+        }
+        .wrdm-site .wrdm-time-pair { display: inline-flex; flex-wrap: wrap; align-items: baseline; column-gap: .55rem; row-gap: .12rem; }
+        .wrdm-site .wrdm-time-uae { color: var(--navy); font-weight: 600; white-space: nowrap; }
+        .wrdm-site .wrdm-time-uk { color: var(--muted); font-size: .92em; white-space: nowrap; }
+        .wrdm-site .wrdm-time-uk::before { content: '·'; margin-right: .55rem; }
+        @media (max-width: 639px) {
+          .wrdm-site .wrdm-time-pair { display: inline-flex; flex-direction: column; }
+          .wrdm-site .wrdm-time-uk::before { content: none; }
         }
         .wrdm-site .wrdm-hero-copy { min-width: 0; }
         .wrdm-site .wrdm-hero-intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; gap: clamp(2rem, 4vw, 3.5rem); margin-top: 1.5rem; }
@@ -900,21 +911,21 @@ export default function Home() {
             </div>
             <aside className="wrdm-key-dates" aria-labelledby="key-dates-title">
               <h2 id="key-dates-title">Free Trial Week</h2>
-              <p className="wrdm-dates-caption">November 2026 · All times are Dubai time</p>
+              <p className="wrdm-dates-caption">November 2026 · UAE and UK times (GMT)</p>
               <div className="wrdm-date-notes">
                 <article className="wrdm-date-note">
                   <time className="wrdm-note-date" dateTime="2026-11-01">1 November</time>
                   <p className="wrdm-note-label">Free student lesson 1</p><h3>Repeated percentage change</h3>
-                  <p className="wrdm-note-time">Sunday · 3:00–4:15 pm</p>
+                  <p className="wrdm-note-time">Sunday<br /><LessonTimes uae="3:00–4:15 pm" uk="11:00 am–12:15 pm" /></p>
                 </article>
                 <article className="wrdm-date-note">
                   <time className="wrdm-note-date" dateTime="2026-11-05">5 November</time>
                   <p className="wrdm-note-label">Free student lesson 2</p><h3>Reverse repeated percentage change</h3>
-                  <p className="wrdm-note-time">Thursday · 5:00–6:15 pm</p>
+                  <p className="wrdm-note-time">Thursday<br /><LessonTimes uae="6:00–7:15 pm" uk="2:00–3:15 pm" /></p>
                 </article>
                 <article className="wrdm-date-note">
                   <time className="wrdm-note-date" dateTime="2026-11-07">7 November</time>
-                  <div><h3>Parent information and Q&amp;A</h3><p className="wrdm-note-time">Saturday · 12:00–1:00 pm</p></div>
+                  <div><h3>Parent information and Q&amp;A</h3><p className="wrdm-note-time">Saturday<br /><LessonTimes uae="2:00–3:00 pm" uk="10:00–11:00 am" /></p></div>
                 </article>
               </div>
             </aside>
@@ -930,11 +941,11 @@ export default function Home() {
               <p className="wrdm-section-description">Two free live lessons explore repeated percentage change and reverse repeated percentage change: shared mathematical content relevant to all four groups. Learn to use multipliers, connect changes over several stages and work backwards to find an original value.</p>
             </div>
             <div className="wrdm-intro-grid">
-              <article><p className="wrdm-eyebrow">Student Lesson 1</p><h3>Repeated percentage change</h3><p><time dateTime="2026-11-01">Sunday, 1 November 2026</time><br />3:00–4:15 pm</p></article>
-              <article><p className="wrdm-eyebrow">Student Lesson 2</p><h3>Reverse repeated percentage change</h3><p><time dateTime="2026-11-05">Thursday, 5 November 2026</time><br />5:00–6:15 pm</p></article>
-              <article><p className="wrdm-eyebrow">For Parents</p><h3>Course information and questions</h3><p><time dateTime="2026-11-07">Saturday, 7 November 2026</time><br />12:00–1:00 pm</p></article>
+              <article><p className="wrdm-eyebrow">Student Lesson 1</p><h3>Repeated percentage change</h3><p><time dateTime="2026-11-01">Sunday, 1 November 2026</time><br /><LessonTimes uae="3:00–4:15 pm" uk="11:00 am–12:15 pm" /></p></article>
+              <article><p className="wrdm-eyebrow">Student Lesson 2</p><h3>Reverse repeated percentage change</h3><p><time dateTime="2026-11-05">Thursday, 5 November 2026</time><br /><LessonTimes uae="6:00–7:15 pm" uk="2:00–3:15 pm" /></p></article>
+              <article><p className="wrdm-eyebrow">For Parents</p><h3>Course information and questions</h3><p><time dateTime="2026-11-07">Saturday, 7 November 2026</time><br /><LessonTimes uae="2:00–3:00 pm" uk="10:00–11:00 am" /></p></article>
             </div>
-            <p className="wrdm-intro-note">All times are Dubai time. After the free introduction week, students join separate eight-week paid courses tailored to their chosen pathway and target level.</p>
+            <p className="wrdm-intro-note">UAE times appear first, with UK times beside them. These November sessions use GMT in the UK. After the free introduction week, students join separate eight-week paid courses tailored to their chosen pathway and target level.</p>
             <a href="/register" className="wrdm-button wrdm-primary">Register for the Free Introduction Week</a>
           </div>
         </section>
@@ -969,11 +980,11 @@ export default function Home() {
                 <details className="wrdm-timetable">
                   <summary>View lesson and drop-in times<span className="wrdm-sr-only"> for {course.title}</span></summary>
                   <dl>
-                    <div><dt>Saturday lesson</dt><dd>{course.saturday}</dd></div>
-                    <div><dt>Sunday lesson</dt><dd>Time to be confirmed</dd></div>
-                    <div><dt>Optional drop-in</dt><dd>{course.office}</dd></div>
+                    <div><dt>Saturday lesson</dt><dd><LessonTimes uae={course.saturday} uk={course.saturdayUK} /></dd></div>
+                    <div><dt>Sunday lesson</dt><dd><LessonTimes uae={course.saturday} uk={course.saturdayUK} /></dd></div>
+                    <div><dt>Optional drop-in</dt><dd><LessonTimes uae={course.office} uk={course.officeUK} /></dd></div>
                   </dl>
-                  <p>All times are Dubai time. Paid-course start date to be confirmed.</p>
+                  <p>UK equivalents shown use GMT (winter time). Paid-course start dates and final UK times will be confirmed before enrolment.</p>
                 </details>
                 <div className="wrdm-course-bottom">
                   <p className="wrdm-course-duration">Eight weeks · Two live lessons each week<br />End-of-course test and feedback</p>
@@ -1077,6 +1088,8 @@ export default function Home() {
     </div>
   );
 }
+
+
 
 
 
